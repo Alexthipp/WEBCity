@@ -9,6 +9,10 @@ let startState= {
     create: createStart
 };
 
+let numThreads = 3;
+let controls = 'keyboard';
+let character = 'jnx';
+
 function preloadStart() {
     game.load.image('play','assets/imgs/button_play.png');
     game.load.image('settings','assets/imgs/button_settings.png');
