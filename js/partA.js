@@ -11,7 +11,8 @@ const HITS_FOR_LEVEL_CHANGE = 50;
 
 let playAState = {
     preload: preloadPartA,
-    create: createPartA
+    create: createPartA,
+    update: updatePartA
 };
 
 function preloadPartA(){
@@ -21,10 +22,13 @@ function preloadPartA(){
 function createPartA(){
     
     //EN UN FUTURO HABRA QUE CREAR CLASES DE ESTO PARA USARLO EN TODAS LAS PARTES
+    //PARA CREAR CLASES HAY QUE CREAR UN .JS Y LUEGO INSERTARLO EN EL HTML
     //CLASES:
     //CHARACTER
     createCharacter();
     createKeyControls();
+    //THREADS
+    createThreads();
     //ROCKET
     createRocketBullet(ROCKETS_GROUP_SIZE);
     createSounds();
@@ -42,6 +46,10 @@ function createKeyControls(){
 
 }
 
+function createThreads(){
+
+}
+
 function createRocketBullet(number){
 
 }
@@ -55,5 +63,9 @@ function createEnemies(number){
 }
 
 function createHUD(){
+
+}
+
+function updatePartA(){
 
 }

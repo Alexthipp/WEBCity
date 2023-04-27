@@ -3,7 +3,7 @@ const GAME_STAGE_HEIGHT = 700;
 
 let game = new Phaser.Game(GAME_STAGE_WIDTH, GAME_STAGE_HEIGHT, Phaser.CANVAS, 'gamestage');
 
-// Entry point
+
 window.onload = startGame;
 
 function startGame() {
