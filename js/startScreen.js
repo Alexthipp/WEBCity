@@ -9,9 +9,11 @@ let startState= {
     create: createStart
 };
 
-let numThreads = 3;
-let controls = 'keyboard';
-let character = 'jnx';
+var numThreads = 3;
+var controls = 'keyboard';
+var linkCharacter = 'assets/imgs/jinx.png';
+
+var threadsArray = [250,500,750];
 
 function preloadStart() {
     game.load.image('play','assets/imgs/button_play.png');

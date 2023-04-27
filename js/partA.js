@@ -16,29 +16,31 @@ let playAState = {
 };
 
 function preloadPartA(){
+    game.load.image('plus', 'assets/imgs/button_plus.png');
 
 }
 
 function createPartA(){
-    
+    /*
     //EN UN FUTURO HABRA QUE CREAR CLASES DE ESTO PARA USARLO EN TODAS LAS PARTES
     //PARA CREAR CLASES HAY QUE CREAR UN .JS Y LUEGO INSERTARLO EN EL HTML
     //CLASES:
     //CHARACTER
     createCharacter();
     createKeyControls();
-    //THREADS
-    createThreads();
+    //THREADS*/
+    createThreads();/*
     //ROCKET
     createRocketBullet(ROCKETS_GROUP_SIZE);
     createSounds();
-    //ENEMIE
+    //ENEMY
     createEnemies(ENEMIES_GROUP_SIZE);
     //HUD
-    createHUD();
+    createHUD();*/
 }
 
 function createCharacter(){
+
 
 }
 
@@ -47,7 +49,7 @@ function createKeyControls(){
 }
 
 function createThreads(){
-
+    threadsArray.forEach(element => game.add.sprite(element,GAME_STAGE_HEIGHT/2,'plus'));
 }
 
 function createRocketBullet(number){
