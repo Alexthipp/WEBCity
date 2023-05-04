@@ -43,7 +43,8 @@ function createSettings() {
     btnKeybd = game.add.button(posX - 120, posY + 50, 'kbd', controlSelection);
     btnMouse = game.add.button(posX + 100, posY + 50, 'mouse', controlSelection);
 
-    btnMouse.visible = false;
+    btnKeybd.alpha = 1;
+    btnMouse.alpha = 0.5;
 
 }
 
@@ -71,12 +72,18 @@ function modNumberThreads(button) {
 function controlSelection(button) {
     if (button === btnKeybd) {
         controls = 'keyboard';
-        btnMouse.visible = true;
-        btnKeybd.visible = false;
+        btnMouse.alpha = 0.5;
+        btnMouse.input.enable = true;
+        btnKeybd.alpha = 1;
+        btnKeybd.input.enable = false;
+        console.log("boton keyboard enable");
     } else {
         controls = 'mouse';
-        btnMouse.visible = false;
-        btnKeybd.visible = true;
+        btnMouse.alpha = 1;
+        btnMouse.input.enable = false;
+        btnKeybd.alpha = 0.5;
+        btnKeybd.input.enable = true;
+        console.log("boton mouse enable");
     }
 
 
