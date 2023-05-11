@@ -21,14 +21,13 @@ function preloadPartA(){
 }
 
 function createPartA(){
-    /*
     //EN UN FUTURO HABRA QUE CREAR CLASES DE ESTO PARA USARLO EN TODAS LAS PARTES
     //PARA CREAR CLASES HAY QUE CREAR UN .JS Y LUEGO INSERTARLO EN EL HTML
     //CLASES:
     //CHARACTER
     createCharacter();
-    createKeyControls();
-    //THREADS*/
+    //createKeyControls();
+    //THREADS
     createThreads();/*
     //ROCKET
     createRocketBullet(ROCKETS_GROUP_SIZE);
@@ -40,7 +39,8 @@ function createPartA(){
 }
 
 function createCharacter(){
-
+    let theCharacter = game.add.sprite(0,0, 'plus');
+    var character = new Character(0, theCharacter);
 
 }
 
