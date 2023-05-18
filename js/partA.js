@@ -23,31 +23,19 @@ function preloadPartA() {
     game.load.image('plus', 'assets/imgs/button_plus.png');
     game.load.image('background', '../assets/imgs/Background.png');
     game.load.image('thread', '../assets/imgs/Thread.png');
-    //game.load.image('bullet', '../assets/imgs/Bullet001.png');
     game.load.atlasJSONHash('bullet','assets/imgs/spritesheetBullet.png','assets/jsons/spritesheetBullet.json');
+    game.load.atlasJSONHash('bomb', '../assets/imgs/spritesheetBomb.png', '../assets/jsons/spritesheetBomb.json');
 
 }
 
 function createPartA() {
-    //EN UN FUTURO HABRA QUE CREAR CLASES DE ESTO PARA USARLO EN TODAS LAS PARTES
-    //PARA CREAR CLASES HAY QUE CREAR UN .JS Y LUEGO INSERTARLO EN EL HTML
-    //CLASES:
-    //CHARACTER
     let bg = game.add.sprite(0, 0, 'background');
     bg.scale.setTo(0.5, 0.5);
     createCharacter();
     createKeyControls();
     createBullets(BULLETS_GROUP_SIZE);
-    //THREADS
     createThreads();
-    /*
-        //ROCKET
-        createRocketBullet(ROCKETS_GROUP_SIZE);
-        createSounds();
-        //ENEMY
-        createEnemies(ENEMIES_GROUP_SIZE);
-        //HUD
-        createHUD();*/
+    createBombs(ENEMIES_GROUP_SIZE);
 }
 
 function createCharacter() {
@@ -74,23 +62,20 @@ function createBullets(number) {
     bullets.enableBody = true;
     bullets.createMultiple(number, 'bullet');
     bullets.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', resetMember);
+    bullets.callAll('anchor.setTo', 'anchor', 0.3, 1.0);
     bullets.setAll('checkWorldBounds', true);
+}
+
+function createBombs(number) {
+    bombs = game.add.group();
+    bombs.enableBody = true;
+    bombs.createMultiple(number, 'bomb');
+    bombs.callAll('anchor.setTo', 'anchor', 0.5, 1.0);
+    game.time.events.loop(TIMER_RHYTHM, activateBomb, this);
 }
 
 function resetMember(item) {
     item.kill();
-}
-
-function createSounds() {
-
-}
-
-function createEnemies(number) {
-
-}
-
-function createHUD() {
-
 }
 
 function updatePartA() {
@@ -132,7 +117,7 @@ function shootBullet(x, y, velocity) {
         bullet.scale.setTo(0.15, 0.15);
         bullet.body.velocity.y = velocity;
         bullet.animations.add('shoot',Phaser.Animation.generateFrameNames('Bullet', 1, 23,'',1,22), 44, true, false);
-        bullet.animations.play('shoot');4
+        bullet.animations.play('shoot');
     }
     return bullet;
 }
@@ -140,5 +125,20 @@ function shootBullet(x, y, velocity) {
 function manageShots() {
     if (fireButton.justDown) {
         fireBullet();
+    }
+}
+
+function activateBomb() {
+    if(Math.random() < 0.2) {
+        let bomb = bombs.getFirstExists(false);
+        if (bomb) {
+            let x = threadsArray[0];
+            let y = 0;
+            bomb.reset(x, y);
+            bomb.scale.setTo(0.1, 0.1);
+            bomb.body.velocity.y = 100;
+            bomb.animations.add('bombAnimation', Phaser.Animation.generateFrameNames('Bomb', 1, 2,'',1,2), 4, true, false );
+            bomb.animations.play('bombAnimation');
+        }
     }
 }
