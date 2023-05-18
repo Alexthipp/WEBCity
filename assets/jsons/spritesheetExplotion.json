@@ -1,6 +1,6 @@
 {
 	"frames": {
-		"Explotion001.png": {
+		"Explotion1": {
 			"frame": {
 				"x": 1,
 				"y": 1,
@@ -20,7 +20,7 @@
 				"h": 900
 			}
 		},
-		"Explotion002.png": {
+		"Explotion2": {
 			"frame": {
 				"x": 903,
 				"y": 1,
@@ -40,7 +40,7 @@
 				"h": 900
 			}
 		},
-		"Explotion003.png": {
+		"Explotion3": {
 			"frame": {
 				"x": 1805,
 				"y": 1,
@@ -60,7 +60,7 @@
 				"h": 900
 			}
 		},
-		"Explotion004.png": {
+		"Explotion4": {
 			"frame": {
 				"x": 2707,
 				"y": 1,
@@ -80,7 +80,7 @@
 				"h": 900
 			}
 		},
-		"Explotion005.png": {
+		"Explotion5": {
 			"frame": {
 				"x": 3609,
 				"y": 1,
@@ -100,7 +100,7 @@
 				"h": 900
 			}
 		},
-		"Explotion006.png": {
+		"Explotion6": {
 			"frame": {
 				"x": 4511,
 				"y": 1,
@@ -120,7 +120,7 @@
 				"h": 900
 			}
 		},
-		"Explotion007.png": {
+		"Explotion7": {
 			"frame": {
 				"x": 5413,
 				"y": 1,
@@ -140,7 +140,7 @@
 				"h": 900
 			}
 		},
-		"Explotion008.png": {
+		"Explotion8": {
 			"frame": {
 				"x": 6315,
 				"y": 1,
@@ -160,7 +160,7 @@
 				"h": 900
 			}
 		},
-		"Explotion009.png": {
+		"Explotion9": {
 			"frame": {
 				"x": 7217,
 				"y": 1,
@@ -180,7 +180,7 @@
 				"h": 900
 			}
 		},
-		"Explotion010.png": {
+		"Explotion10": {
 			"frame": {
 				"x": 8119,
 				"y": 1,
@@ -200,7 +200,7 @@
 				"h": 900
 			}
 		},
-		"Explotion011.png": {
+		"Explotion11": {
 			"frame": {
 				"x": 9021,
 				"y": 1,
@@ -220,7 +220,7 @@
 				"h": 900
 			}
 		},
-		"Explotion012.png": {
+		"Explotion12": {
 			"frame": {
 				"x": 9923,
 				"y": 1,
@@ -240,7 +240,7 @@
 				"h": 900
 			}
 		},
-		"Explotion013.png": {
+		"Explotion13": {
 			"frame": {
 				"x": 10825,
 				"y": 1,
@@ -260,7 +260,7 @@
 				"h": 900
 			}
 		},
-		"Explotion014.png": {
+		"Explotion14": {
 			"frame": {
 				"x": 11727,
 				"y": 1,
@@ -280,7 +280,7 @@
 				"h": 900
 			}
 		},
-		"Explotion015.png": {
+		"Explotion15": {
 			"frame": {
 				"x": 12629,
 				"y": 1,
@@ -300,7 +300,7 @@
 				"h": 900
 			}
 		},
-		"Explotion016.png": {
+		"Explotion16": {
 			"frame": {
 				"x": 13531,
 				"y": 1,
@@ -324,7 +324,7 @@
 	"meta": {
 		"app": "http://www.codeandweb.com/texturepacker",
 		"version": "1.0",
-		"image": "spritesheet.png",
+		"image": "spritesheetExplotion.png",
 		"format": "RGBA8888",
 		"size": {
 			"w": 14432,

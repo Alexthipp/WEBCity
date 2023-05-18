@@ -23,7 +23,8 @@ function preloadPartA() {
     game.load.image('plus', 'assets/imgs/button_plus.png');
     game.load.image('background', '../assets/imgs/Background.png');
     game.load.image('thread', '../assets/imgs/Thread.png');
-    game.load.image('bullet', '../assets/imgs/Bullet001.png');
+    //game.load.image('bullet', '../assets/imgs/Bullet001.png');
+    game.load.atlasJSONHash('bullet','assets/imgs/spritesheetBullet.png','assets/jsons/spritesheetBullet.json');
 
 }
 
@@ -128,8 +129,10 @@ function shootBullet(x, y, velocity) {
     let bullet = bullets.getFirstExists(false);
     if (bullet) {
         bullet.reset(x, y);
-        bullet.scale.setTo(0.1, 0.05);
+        bullet.scale.setTo(0.15, 0.15);
         bullet.body.velocity.y = velocity;
+        bullet.animations.add('shoot',Phaser.Animation.generateFrameNames('Bullet', 1, 23,'',1,22), 44, true, false);
+        bullet.animations.play('shoot');4
     }
     return bullet;
 }
