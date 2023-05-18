@@ -1,0 +1,475 @@
+{
+	"frames": {
+		"Bullet001.png": {
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet002.png": {
+			"frame": {
+				"x": 287,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet003.png": {
+			"frame": {
+				"x": 573,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet004.png": {
+			"frame": {
+				"x": 859,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet005.png": {
+			"frame": {
+				"x": 1145,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet006.png": {
+			"frame": {
+				"x": 1431,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet007.png": {
+			"frame": {
+				"x": 1717,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet008.png": {
+			"frame": {
+				"x": 2003,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet009.png": {
+			"frame": {
+				"x": 2289,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet010.png": {
+			"frame": {
+				"x": 2575,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet011.png": {
+			"frame": {
+				"x": 2861,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet012.png": {
+			"frame": {
+				"x": 3147,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet013.png": {
+			"frame": {
+				"x": 3433,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet014.png": {
+			"frame": {
+				"x": 3719,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet015.png": {
+			"frame": {
+				"x": 4005,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet016.png": {
+			"frame": {
+				"x": 4291,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet017.png": {
+			"frame": {
+				"x": 4577,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet018.png": {
+			"frame": {
+				"x": 4863,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet019.png": {
+			"frame": {
+				"x": 5149,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet020.png": {
+			"frame": {
+				"x": 5435,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet021.png": {
+			"frame": {
+				"x": 5721,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet022.png": {
+			"frame": {
+				"x": 6007,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		},
+		"Bullet023.png": {
+			"frame": {
+				"x": 6293,
+				"y": 1,
+				"w": 284,
+				"h": 1469
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 284,
+				"h": 1469
+			},
+			"sourceSize": {
+				"w": 284,
+				"h": 1469
+			}
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "spritesheet.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 6578,
+			"h": 1471
+		},
+		"scale": "1"
+	}
+}
