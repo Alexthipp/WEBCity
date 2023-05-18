@@ -22,6 +22,8 @@ let playAState = {
 
 function preloadPartA() {
     game.load.image('plus', 'assets/imgs/button_plus.png');
+    game.load.image('background', '../assets/imgs/Background.png');
+    game.load.image('thread', '../assets/imgs/Thread.png');
 
 }
 
@@ -30,6 +32,8 @@ function createPartA() {
     //PARA CREAR CLASES HAY QUE CREAR UN .JS Y LUEGO INSERTARLO EN EL HTML
     //CLASES:
     //CHARACTER
+    let bg = game.add.sprite(0, 0, 'background');
+    bg.scale.setTo(0.5, 0.5);
     createCharacter();
     createKeyControls();
     //THREADS
@@ -56,7 +60,7 @@ function createKeyControls() {
 }
 
 function createThreads() {
-    threadsArray.forEach(element => game.add.sprite(element, GAME_STAGE_HEIGHT / 2, 'plus'));
+    threadsArray.forEach(element => game.add.sprite(element, GAME_STAGE_HEIGHT / 2, 'thread'));
 }
 
 function createRocketBullet(number) {
