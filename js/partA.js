@@ -9,65 +9,91 @@ const LEVEL_ENEMIES_PROBABILITY = [0.2, 0.4, 0.6, 0.8, 1.0];
 const LEVEL_ENEMIES_VELOCITY = [50, 100, 150, 200, 250];
 const HITS_FOR_LEVEL_CHANGE = 50;
 
+let cursors;
+let fireButton;
+let character;
+let bugs;
+
 let playAState = {
     preload: preloadPartA,
     create: createPartA,
     update: updatePartA
 };
 
-function preloadPartA(){
+function preloadPartA() {
     game.load.image('plus', 'assets/imgs/button_plus.png');
 
 }
 
-function createPartA(){
+function createPartA() {
     //EN UN FUTURO HABRA QUE CREAR CLASES DE ESTO PARA USARLO EN TODAS LAS PARTES
     //PARA CREAR CLASES HAY QUE CREAR UN .JS Y LUEGO INSERTARLO EN EL HTML
     //CLASES:
     //CHARACTER
     createCharacter();
-    //createKeyControls();
+    createKeyControls();
     //THREADS
-    createThreads();/*
-    //ROCKET
-    createRocketBullet(ROCKETS_GROUP_SIZE);
-    createSounds();
-    //ENEMY
-    createEnemies(ENEMIES_GROUP_SIZE);
-    //HUD
-    createHUD();*/
+    createThreads();
+    /*
+        //ROCKET
+        createRocketBullet(ROCKETS_GROUP_SIZE);
+        createSounds();
+        //ENEMY
+        createEnemies(ENEMIES_GROUP_SIZE);
+        //HUD
+        createHUD();*/
 }
 
-function createCharacter(){
-    let theCharacter = game.add.sprite(0,0, 'plus');
-    var character = new Character(0, theCharacter);
-
-}
-
-function createKeyControls(){
+function createCharacter() {
+    let theCharacter = game.add.sprite(0, 0, 'plus');
+    character = new Character(0, theCharacter);
 
 }
 
-function createThreads(){
-    threadsArray.forEach(element => game.add.sprite(element,GAME_STAGE_HEIGHT/2,'plus'));
+function createKeyControls() {
+    cursors = game.input.keyboard.createCursorKeys();
+    fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 }
 
-function createRocketBullet(number){
-
+function createThreads() {
+    threadsArray.forEach(element => game.add.sprite(element, GAME_STAGE_HEIGHT / 2, 'plus'));
 }
 
-function createSounds(){
-
-}
-
-function createEnemies(number){
+function createRocketBullet(number) {
 
 }
 
-function createHUD(){
+function createSounds() {
 
 }
 
-function updatePartA(){
+function createEnemies(number) {
 
+}
+
+function createHUD() {
+
+}
+
+function updatePartA() {
+    manageCharacterMovement();
+}
+
+function manageCharacterMovement() {
+    if (controls == 'mouse') {
+        if (game.input.speed.x < 0) {
+            character.move('left');
+        }
+        else if (game.input.speed.x > 0) {
+            character.move('right');
+        }
+    }
+    else if (controls == 'keyboard') {
+        if (cursors.left.justDown) {
+            character.move('left');
+        }
+        else if (cursors.right.justDown) {
+            character.move('right');
+        }
+    }
 }

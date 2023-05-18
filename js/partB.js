@@ -1,6 +1,7 @@
 let playBState = {
     preload: preloadPartB,
-    create: createPartB
+    create: createPartB,
+    update: updatePartA
 };
 
 function preloadPartB(){
@@ -8,5 +9,11 @@ function preloadPartB(){
 }
 
 function createPartB(){
+    createCharacter();
+    createKeyControls();
     createThreads();
+}
+
+function updatePartB(){
+    manageCharacterMovement();
 }
