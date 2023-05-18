@@ -1,18 +1,17 @@
 const HUD_HEIGHT = 50;
-const ROCKETS_GROUP_SIZE = 40;
-const ROCKETS_OFFSET_Y = 10;
-const ROCKETS_VELOCITY = 500;
+const BULLETS_GROUP_SIZE = 40;
 const ENEMIES_GROUP_SIZE = 200;
 const TIMER_RHYTHM = 0.1 * Phaser.Timer.SECOND;
 const NUM_LEVELS = 3;
-const LEVEL_ENEMIES_PROBABILITY = [0.2, 0.4, 0.6, 0.8, 1.0];
-const LEVEL_ENEMIES_VELOCITY = [50, 100, 150, 200, 250];
+const LEVEL_BOMBS_PROBABILITY = [0.2, 0.4, 0.6, 0.8, 1.0];
+const LEVEL_BOMBS_VELOCITY = [50, 100, 150, 200, 250];
 const HITS_FOR_LEVEL_CHANGE = 50;
 
 let cursors;
 let fireButton;
 let character;
-let bugs;
+let bombs;
+let bullets;
 
 let playAState = {
     preload: preloadPartA,
@@ -24,6 +23,7 @@ function preloadPartA() {
     game.load.image('plus', 'assets/imgs/button_plus.png');
     game.load.image('background', '../assets/imgs/Background.png');
     game.load.image('thread', '../assets/imgs/Thread.png');
+    game.load.image('bullet', '../assets/imgs/Bullet001.png');
 
 }
 
@@ -36,6 +36,7 @@ function createPartA() {
     bg.scale.setTo(0.5, 0.5);
     createCharacter();
     createKeyControls();
+    createBullets(BULLETS_GROUP_SIZE);
     //THREADS
     createThreads();
     /*
@@ -67,8 +68,16 @@ function createThreads() {
     }
 }
 
-function createRocketBullet(number) {
+function createBullets(number) {
+    bullets = game.add.group();
+    bullets.enableBody = true;
+    bullets.createMultiple(number, 'bullet');
+    bullets.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', resetMember);
+    bullets.setAll('checkWorldBounds', true);
+}
 
+function resetMember(item) {
+    item.kill();
 }
 
 function createSounds() {
@@ -85,6 +94,7 @@ function createHUD() {
 
 function updatePartA() {
     manageCharacterMovement();
+    manageShots();
 }
 
 function manageCharacterMovement() {
@@ -103,5 +113,29 @@ function manageCharacterMovement() {
         else if (cursors.right.justDown) {
             character.move('right');
         }
+    }
+}
+
+function fireBullet() {
+    let x = character.chSprite.x;
+    let y = character.chSprite.y;
+    let v = -250;
+
+    let bullet = shootBullet(x, y, v);
+}
+
+function shootBullet(x, y, velocity) {
+    let bullet = bullets.getFirstExists(false);
+    if (bullet) {
+        bullet.reset(x, y);
+        bullet.scale.setTo(0.1, 0.05);
+        bullet.body.velocity.y = velocity;
+    }
+    return bullet;
+}
+
+function manageShots() {
+    if (fireButton.justDown) {
+        fireBullet();
     }
 }
