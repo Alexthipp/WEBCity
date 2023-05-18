@@ -60,7 +60,11 @@ function createKeyControls() {
 }
 
 function createThreads() {
-    threadsArray.forEach(element => game.add.sprite(element, GAME_STAGE_HEIGHT / 2, 'thread'));
+    //threadsArray.forEach(element => game.add.sprite(element - 70, 0, 'thread'));
+    for (i = 0; i < threadsArray.length; i++) {
+        let thread = game.add.sprite(threadsArray[i] - 35, 0, 'thread');
+        thread.scale.setTo(1, 0.74);
+    }
 }
 
 function createRocketBullet(number) {
