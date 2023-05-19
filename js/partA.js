@@ -1,7 +1,7 @@
 const HUD_HEIGHT = 50;
 const BULLETS_GROUP_SIZE = 40;
 const ENEMIES_GROUP_SIZE = 200;
-const TIMER_RHYTHM = 0.25 * Phaser.Timer.SECOND;
+const TIMER_RHYTHM = 2 * Phaser.Timer.SECOND;
 const NUM_LEVELS = 3;
 const LEVEL_BOMBS_PROBABILITY = [0.2, 0.4, 0.6, 0.8, 1.0];
 const LEVEL_BOMBS_VELOCITY = [50, 100, 150, 200, 250];
@@ -71,6 +71,8 @@ function createBombs(number) {
     bombs.enableBody = true;
     bombs.createMultiple(number, 'bomb');
     bombs.callAll('anchor.setTo', 'anchor', 0.5, 1.0);
+    bombs.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', resetMember);
+    bombs.setAll('checkWorldBounds', true);
     game.time.events.loop(TIMER_RHYTHM, activateBomb, this);
 }
 
@@ -129,16 +131,21 @@ function manageShots() {
 }
 
 function activateBomb() {
-    if(Math.random() < 0.2) {
+    //if(Math.random() < 0.2) {
         let bomb = bombs.getFirstExists(false);
         if (bomb) {
-            let x = threadsArray[0];
+            let x = pickARandom();
             let y = 0;
             bomb.reset(x, y);
             bomb.scale.setTo(0.1, 0.1);
-            bomb.body.velocity.y = 100;
+            bomb.body.velocity.y = 70;
             bomb.animations.add('bombAnimation', Phaser.Animation.generateFrameNames('Bomb', 1, 2,'',1,2), 4, true, false );
             bomb.animations.play('bombAnimation');
         }
-    }
+    //}
+}
+
+function pickARandom(){
+    let rnd = Math.floor(Math.random() * threadsArray.length);
+    return threadsArray[rnd];
 }
