@@ -1,6 +1,7 @@
 const HUD_HEIGHT = 50;
 const BULLETS_GROUP_SIZE = 40;
 const ENEMIES_GROUP_SIZE = 200;
+EXPLOTIONS_GROUP_SIZE = 100;
 const TIMER_RHYTHM = 2 * Phaser.Timer.SECOND;
 const NUM_LEVELS = 3;
 const LEVEL_BOMBS_PROBABILITY = [0.2, 0.4, 0.6, 0.8, 1.0];
@@ -12,6 +13,7 @@ let fireButton;
 let character;
 let bombs;
 let bullets;
+let explotion;
 
 let playAState = {
     preload: preloadPartA,
@@ -25,6 +27,7 @@ function preloadPartA() {
     game.load.image('thread', '../assets/imgs/Thread.png');
     game.load.atlasJSONHash('bullet','assets/imgs/spritesheetBullet.png','assets/jsons/spritesheetBullet.json');
     game.load.atlasJSONHash('bomb', '../assets/imgs/spritesheetBomb.png', '../assets/jsons/spritesheetBomb.json');
+    game.load.atlasJSONHash('expl','assets/imgs/spritesheetExplotion.png','assets/jsons/spritesheetExplotion.json');
 
 }
 
@@ -36,6 +39,9 @@ function createPartA() {
     createBullets(BULLETS_GROUP_SIZE);
     createThreads();
     createBombs(ENEMIES_GROUP_SIZE);
+    createExplotions(EXPLOTIONS_GROUP_SIZE);
+    
+
 }
 
 function createCharacter() {
@@ -83,6 +89,7 @@ function resetMember(item) {
 function updatePartA() {
     manageCharacterMovement();
     manageShots();
+    game.physics.arcade.overlap(bullets,bombs,bulletHitsBomb,null,this);
 }
 
 function manageCharacterMovement() {
@@ -149,3 +156,47 @@ function pickARandom(){
     let rnd = Math.floor(Math.random() * threadsArray.length);
     return threadsArray[rnd];
 }
+
+function createExplotions(number) {
+    explotions = game.add.group();
+    explotions.createMultiple(number, 'expl');
+    explotions.forEach(setupExplotion, this);
+}
+
+function setupExplotion(explotion) {
+    explotion.scale.setTo(0.25,0.25);
+    explotion.anchor.x = 0.5;
+    explotion.anchor.y = 0.5;
+    explotion.animations.add('exploit',Phaser.Animation.generateFrameNames('Explotion', 1, 16,'',1,16), 16, false, false);
+}
+
+function displayExplotion(bomb) {
+    let explotion = explotions.getFirstExists(false);
+    let x = bomb.body.center.x;
+    let y = bomb.body.center.y;
+    explotion.reset(x, y);
+    explotion.animations.play('exploit');
+     
+}
+
+
+function bulletHitsBomb(bullet, bomb) {
+    bullet.kill();
+    bomb.kill();
+    displayExplotion(bomb);
+    //soundBlast.play();
+    /*score++;
+    scoreText.text = 'Score: '+score;
+    if (level < NUM_LEVELS && score===level*HITS_FOR_LEVEL_CHANGE) {
+        level++;
+        levelText.text = 'Level: ' + level;
+        currentUfoProbability =
+        LEVEL_UFO_PROBABILITY[level-1];
+        currentUfoVelocity =
+        LEVEL_UFO_VELOCITY[level-1];
+    }*/
+      
+    
+}
+
+
