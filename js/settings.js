@@ -67,6 +67,8 @@ function modNumberThreads(button) {
     for(let pos = 0; pos < numThreads; pos++){
         threadsArray.push(offsetPosition * (pos+1));
     }
+
+    threadDistance = threadsArray[1]-threadsArray[0];
 }
 
 function controlSelection(button) {

@@ -12,6 +12,7 @@ let startState= {
 var numThreads = 3;
 var controls = 'keyboard';
 var linkCharacter = 'assets/imgs/jinx.png';
+var threadDistance = 250;
 
 var threadsArray = [250,500,750];
 

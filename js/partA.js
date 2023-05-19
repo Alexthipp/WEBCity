@@ -87,10 +87,10 @@ function updatePartA() {
 
 function manageCharacterMovement() {
     if (controls == 'mouse') {
-        if (game.input.speed.x < 0) {
+        if (game.input.speed.x < 0 && game.input.mousePointer.x < character.chSprite.x - threadDistance/2) {
             character.move('left');
         }
-        else if (game.input.speed.x > 0) {
+        else if (game.input.speed.x > 0 && game.input.mousePointer.x > character.chSprite.x + threadDistance/2) {
             character.move('right');
         }
     }
