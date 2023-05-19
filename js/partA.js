@@ -1,7 +1,7 @@
 const HUD_HEIGHT = 50;
 const BULLETS_GROUP_SIZE = 40;
 const ENEMIES_GROUP_SIZE = 200;
-const TIMER_RHYTHM = 0.1 * Phaser.Timer.SECOND;
+const TIMER_RHYTHM = 0.25 * Phaser.Timer.SECOND;
 const NUM_LEVELS = 3;
 const LEVEL_BOMBS_PROBABILITY = [0.2, 0.4, 0.6, 0.8, 1.0];
 const LEVEL_BOMBS_VELOCITY = [50, 100, 150, 200, 250];
