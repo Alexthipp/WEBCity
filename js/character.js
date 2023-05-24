@@ -1,9 +1,10 @@
 class Character {
-    constructor(pos, Sprite) {
+    constructor(pos, Sprite, health) {
         this.position = pos;
         this.chSprite = Sprite;
         this.chSprite.x = threadsArray[this.position];
         this.chSprite.y = GAME_STAGE_HEIGHT - 50;
+        this.health = health;
     }
 
     move(direction) {
