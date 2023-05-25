@@ -1,11 +1,12 @@
 const HUD_HEIGHT = 50;
 const BULLETS_GROUP_SIZE = 40;
 const ENEMIES_GROUP_SIZE = 200;
-const TIMER_RHYTHM = 2 * Phaser.Timer.SECOND;
+const TIMER_RHYTHM = 1.5 * Phaser.Timer.SECOND;
 const NUM_LEVELS = 3;
-const LEVEL_BOMBS_PROBABILITY = [0.2, 0.4, 0.6, 0.8, 1.0];
-const LEVEL_BOMBS_VELOCITY = [50, 100, 150, 200, 250];
-const HITS_FOR_LEVEL_CHANGE = 50;
+const LEVEL_BOMBS_PROBABILITY = [0.4, 1.2, 2.0];
+const LEVEL_BOMBS_VELOCITY = [50, 150, 250];
+const HITS_FOR_LEVEL_CHANGE = 15;
+
 
 let cursors;
 let fireButton;
@@ -14,6 +15,22 @@ let bombs;
 let honeys;
 let bullets;
 let explotion;
+
+let currentBombProbability;
+let currentBombVelocity;
+
+let ground
+
+//HUD
+let score; 
+let scoreText;
+let level;
+let levelText;
+let lives;
+let livesText;
+
+
+
 
 let playAState = {
     preload: preloadPartA,
@@ -25,9 +42,12 @@ let playAState = {
                         PRELOAD PART
 ------------------------------------------------------------------*/
 function preloadPartA() {
+    
+    game.load.image('ground', 'assets/imgs/Ground.png')
     game.load.image('plus', 'assets/imgs/button_plus.png');
     game.load.image('background', '../assets/imgs/Background.png');
     game.load.image('thread', '../assets/imgs/Thread.png');
+    
     game.load.atlasJSONHash('honey', 'assets/imgs/spritesheetHoneyfruit.png','assets/jsons/spritesheetHoneyfruit.json');
     game.load.atlasJSONHash('bullet','assets/imgs/spritesheetBullet.png','assets/jsons/spritesheetBullet.json');
     game.load.atlasJSONHash('bomb', '../assets/imgs/spritesheetBomb.png', '../assets/jsons/spritesheetBomb.json');
@@ -38,6 +58,11 @@ function preloadPartA() {
                         CREATE PART
 ------------------------------------------------------------------*/
 function createPartA() {
+    score = 0;
+    level = 1;
+
+    
+
     let bg = game.add.sprite(0, 0, 'background');
     bg.scale.setTo(0.5, 0.5);
     createKeyControls();
@@ -47,6 +72,10 @@ function createPartA() {
     createHealthItem(ENEMIES_GROUP_SIZE);
     createExplotions(ENEMIES_GROUP_SIZE);
     createCharacter();
+    createHUD();
+
+    ground = game.add.sprite(0, GAME_STAGE_HEIGHT-45, 'ground');
+    game.physics.enable(ground, Phaser.Physics.ARCADE);
 
 }
 
@@ -58,6 +87,7 @@ function updatePartA() {
     manageShots();
     game.physics.arcade.overlap(bullets,bombs,bulletHitsBomb,null,this);
     game.physics.arcade.overlap(honeys,character.chSprite,healthHitsCharacter,null,this);
+    game.physics.arcade.overlap(bombs,ground,BombHitsGround,null,this);
 }
 
 /*----------------------------------------------------------------
@@ -111,6 +141,28 @@ function manageShots() {
         fireBullet();
     }
 }
+
+/*----------------------------------------------------------------
+                    HUD FUNCTIONS 
+------------------------------------------------------------------*/
+
+function createHUD() {
+    let scoreX = 5;
+    let levelX = game.world.width / 2;
+    let livesX = game.world.width - 5;
+    let allY = game.world.height - 25;
+    let styleHUD =
+    {fontSize: '18px', fill: '#FFFFFF'};
+    scoreText = game.add.text(
+    scoreX,allY,'Score: '+score,styleHUD);
+    levelText = game.add.text(
+    levelX,allY,'Level: '+level,styleHUD);
+    levelText.anchor.setTo(0.5, 0);
+    livesText = game.add.text(
+    livesX,allY,'Lives: '+ character.health,styleHUD);
+    livesText.anchor.setTo(1, 0);
+}
+
 
 /*----------------------------------------------------------------
                     THREADS FUNCTIONS 
@@ -167,22 +219,24 @@ function createBombs(number) {
     bombs.callAll('anchor.setTo', 'anchor', 0.5, 1.0);
     bombs.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', resetMember);
     bombs.setAll('checkWorldBounds', true);
+    currentBombProbability = LEVEL_BOMBS_PROBABILITY[level-1];
+    currentBombVelocity = LEVEL_BOMBS_VELOCITY[level-1];
     game.time.events.loop(TIMER_RHYTHM, activateBomb, this);
 }
 
 function activateBomb() {
-    //if(Math.random() < 0.2) {
+    if(Math.random() < currentBombProbability) {
         let bomb = bombs.getFirstExists(false);
         if (bomb) {
             let x = pickARandom();
             let y = 0;
             bomb.reset(x, y);
             bomb.scale.setTo(0.1, 0.1);
-            bomb.body.velocity.y = 70;
+            bomb.body.velocity.y = currentBombVelocity;
             bomb.animations.add('bombAnimation', Phaser.Animation.generateFrameNames('Bomb', 1, 2,'',1,2), 4, true, false );
             bomb.animations.play('bombAnimation');
         }
-    //}
+    }
 }
 
 /*----------------------------------------------------------------
@@ -249,8 +303,24 @@ function pickARandom(){
     return threadsArray[rnd] + 25;
 }
 
+
+function continueGame() {
+    game.input.enabled = true;
+    if (character.health > 0) {
+        cursors.left.reset();
+        cursors.right.reset();
+        currentBombProbability =
+        LEVEL_BOMBS_PROBABILITY[level-1];
+    }
+    else
+    game.state.start('startScreen');      
+}
+
 /*----------------------------------------------------------------
                         COLLISIONS
+        -Condición para pasar de parte en BulletHitsBomb()-
+            -Condición fin de juego en BombHitsGround()-
+
 ------------------------------------------------------------------*/
 
 function bulletHitsBomb(bullet, bomb) {
@@ -263,16 +333,16 @@ function bulletHitsBomb(bullet, bomb) {
     }
     displayExplotion(bomb);
     //soundBlast.play();
-    /*score++;
+    score++;
     scoreText.text = 'Score: '+score;
-    if (level < NUM_LEVELS && score===level*HITS_FOR_LEVEL_CHANGE) {
+    if (level < NUM_LEVELS && score === level*HITS_FOR_LEVEL_CHANGE) {
         level++;
         levelText.text = 'Level: ' + level;
-        currentUfoProbability =
-        LEVEL_UFO_PROBABILITY[level-1];
-        currentUfoVelocity =
-        LEVEL_UFO_VELOCITY[level-1];
-    }*/
+        currentBombProbability = LEVEL_BOMBS_PROBABILITY[level-1];
+        currentBombVelocity = LEVEL_BOMBS_VELOCITY[level-1];
+    }else if(level == NUM_LEVELS && score === level*HITS_FOR_LEVEL_CHANGE){
+        game.state.start('startScreen');
+    }
       
 }
 
@@ -280,14 +350,30 @@ function healthHitsCharacter(character, honey){
     honey.kill();
     if(0 < character.health <= 150){
         character.health += 50;
-    }else if(character > 150){
+    }else if(200 >= character > 150){
         character.health = 200;
     }
+
+    livesText.text = 'Lives: ' + character.health;
+}
+
+function BombHitsGround(ground,bomb){
+    bomb.kill();
+    bombs.forEach(resetMember, this);
+    bullets.forEach(resetMember, this);
+    game.input.enabled = false;
+    currentBombProbability = -1;
+    character.health -=10;
+    livesText.text = 'Lives: ' + character.health;
+
+    game.time.events.add(1000, continueGame, this);
+    
+
 }
 
 
 /*----------------COMENTARIOS PARA EL PROFESOR TUTORIA !!!!!BORRAR ANTES DE ENTREGAR!!!!!!-------------------------------------------------------------------------------------
     -Bombas a veces explotan solas sin que una bala colisione con ellas, puede que sea que hayan dos balas una sin sprite.
     -Por que en la funcion de healthHitsCharacter el orden de los parametros es alreves a como se introducen en la función update.
-    
+
 */
