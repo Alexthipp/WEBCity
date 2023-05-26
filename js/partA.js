@@ -29,7 +29,7 @@ let levelText;
 let lives;
 let livesText;
 
-
+let health;
 
 
 let playAState = {
@@ -60,9 +60,8 @@ function preloadPartA() {
 function createPartA() {
     score = 0;
     level = 1;
-
+    health = 200;
     
-
     let bg = game.add.sprite(0, 0, 'background');
     bg.scale.setTo(0.5, 0.5);
     createKeyControls();
@@ -87,7 +86,8 @@ function updatePartA() {
     manageShots();
     game.physics.arcade.overlap(bullets,bombs,bulletHitsBomb,null,this);
     game.physics.arcade.overlap(honeys,character.chSprite,healthHitsCharacter,null,this);
-    game.physics.arcade.overlap(bombs,ground,BombHitsGround,null,this);
+    game.physics.arcade.overlap(bombs,ground,bombHitsGround,null,this);
+    game.physics.arcade.overlap(bombs,character.chSprite,bombHitsGround,null,this);
 }
 
 /*----------------------------------------------------------------
@@ -96,6 +96,7 @@ function updatePartA() {
 
 function createCharacter() {
     let theCharacter = game.add.sprite(0, 0, 'plus');
+    theCharacter.anchor.setTo(0.5,1);
     game.physics.enable(theCharacter, Phaser.Physics.ARCADE);
     character = new Character(0, theCharacter,200);
 }
@@ -118,7 +119,6 @@ function manageCharacterMovement() {
         }
     }
 }
-
 
 /*----------------------------------------------------------------
                     CONTROLS FUNCTIONS 
@@ -305,7 +305,7 @@ function pickARandom(){
 
 
 function continueGame() {
-    game.input.enabled = true;
+    
     if (character.health > 0) {
         cursors.left.reset();
         cursors.right.reset();
@@ -314,6 +314,10 @@ function continueGame() {
     }
     else
     game.state.start('startScreen');      
+}
+
+function endGame(){
+    game.state.start('startScreen');
 }
 
 /*----------------------------------------------------------------
@@ -348,25 +352,37 @@ function bulletHitsBomb(bullet, bomb) {
 
 function healthHitsCharacter(character, honey){
     honey.kill();
-    if(0 < character.health <= 150){
-        character.health += 50;
-    }else if(200 >= character > 150){
-        character.health = 200;
+
+    if(0 < health && health <= 150){
+        health += 50;
+    }else if(200 >= health && health > 150){
+        health = 200;
     }
 
-    livesText.text = 'Lives: ' + character.health;
+    livesText.text = 'Lives: ' + health;
 }
 
-function BombHitsGround(ground,bomb){
+function bombHitsGround(ground,bomb){
     bomb.kill();
     bombs.forEach(resetMember, this);
     bullets.forEach(resetMember, this);
-    game.input.enabled = false;
+    
     currentBombProbability = -1;
-    character.health -=10;
-    livesText.text = 'Lives: ' + character.health;
+    health -= 15;
+    livesText.text = 'Lives: ' + health;
 
-    game.time.events.add(1000, continueGame, this);
+    if(health == 0){
+        let explotion = explotions.getFirstExists(false);
+        if(explotion){
+            explotion.reset(GAME_STAGE_WIDTH/2, GAME_STAGE_HEIGHT/2);
+            explotion.scale.setTo(1.25,1.25);
+            explotion.animations.play('exploit');
+        }
+
+        game.time.events.add(5500, endGame, this);
+    }
+    else
+        game.time.events.add(1000, continueGame, this);
     
 
 }
