@@ -13,6 +13,7 @@ function startGame() {
     game.state.add('instructions', insState);
     game.state.add('partA', playAState);
     game.state.add('partB',playBState);
+    game.state.add('endScreen',endState);
     
 
     game.state.start('startScreen');

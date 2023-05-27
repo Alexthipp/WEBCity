@@ -9,6 +9,7 @@ let startState= {
     create: createStart
 };
 
+var stateName;
 var numThreads = 3;
 var controls = 'keyboard';
 var linkCharacter = 'assets/imgs/jinx.png';

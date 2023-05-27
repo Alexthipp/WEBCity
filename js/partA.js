@@ -58,9 +58,10 @@ function preloadPartA() {
                         CREATE PART
 ------------------------------------------------------------------*/
 function createPartA() {
+    stateName = 'PartA';
     score = 0;
     level = 1;
-    health = 200;
+    health = 15;
     
     let bg = game.add.sprite(0, 0, 'background');
     bg.scale.setTo(0.5, 0.5);
@@ -88,6 +89,8 @@ function updatePartA() {
     game.physics.arcade.overlap(honeys,character.chSprite,healthHitsCharacter,null,this);
     game.physics.arcade.overlap(bombs,ground,bombHitsGround,null,this);
     game.physics.arcade.overlap(bombs,character.chSprite,bombHitsGround,null,this);
+
+    
 }
 
 /*----------------------------------------------------------------
@@ -159,7 +162,7 @@ function createHUD() {
     levelX,allY,'Level: '+level,styleHUD);
     levelText.anchor.setTo(0.5, 0);
     livesText = game.add.text(
-    livesX,allY,'Lives: '+ character.health,styleHUD);
+    livesX,allY,'Lives: '+ health,styleHUD);
     livesText.anchor.setTo(1, 0);
 }
 
@@ -306,18 +309,15 @@ function pickARandom(){
 
 function continueGame() {
     
-    if (character.health > 0) {
-        cursors.left.reset();
-        cursors.right.reset();
-        currentBombProbability =
-        LEVEL_BOMBS_PROBABILITY[level-1];
-    }
-    else
-    game.state.start('startScreen');      
+    cursors.left.reset();
+    cursors.right.reset();
+    currentBombProbability =
+    LEVEL_BOMBS_PROBABILITY[level-1];
+  
 }
 
 function endGame(){
-    game.state.start('startScreen');
+    game.state.start('endScreen');
 }
 
 /*----------------------------------------------------------------
@@ -345,7 +345,14 @@ function bulletHitsBomb(bullet, bomb) {
         currentBombProbability = LEVEL_BOMBS_PROBABILITY[level-1];
         currentBombVelocity = LEVEL_BOMBS_VELOCITY[level-1];
     }else if(level == NUM_LEVELS && score === level*HITS_FOR_LEVEL_CHANGE){
-        game.state.start('startScreen');
+        if(stateName === 'partA'){
+            game.state.start('partB');
+        }
+        else if(stateName === 'partB'){
+            game.state.start('startScreen');
+        }else{
+            game.state.start('endScreen');
+        }
     }
       
 }
