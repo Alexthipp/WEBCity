@@ -16,8 +16,10 @@ function preloadSettings() {
 
 
 let textNum;
-let btnKeybd
-let btnMouse
+let btnKeybd;
+let btnMouse;
+let btnJinx;
+let btnZoe;
 let styleT = {
     font: '25px Arial',
     fill: '#FF0000'
@@ -33,7 +35,8 @@ function createSettings() {
     btnbck = game.add.button(posX, posY + BUTTON_OFFSETY_BETWEEN * 2, 'back', clickBack);
 
     let textT = 'Threads number: \n\n\n';
-    textT += 'Controls: ';
+    textT += 'Controls: \n\n\n';
+    textT += 'Character: ';
 
 
     let textThreads = game.add.text(GAME_STAGE_WIDTH / 4, GAME_STAGE_HEIGHT / 4, textT, styleT);
@@ -49,8 +52,14 @@ function createSettings() {
     btnKeybd = game.add.button(posX - 120, posY + 50, 'kbd', controlSelection);
     btnMouse = game.add.button(posX + 100, posY + 50, 'mouse', controlSelection);
 
+    btnJinx = game.add.button(posX - 120, posY + 150, 'plus', characterSelection);
+    btnZoe = game.add.button(posX + 100, posY + 150, 'menus', characterSelection);
+
     btnKeybd.alpha = 1;
     btnMouse.alpha = 0.5;
+
+    btnJinx.alpha = 1;
+    btnZoe.alpha = 0.5;
 
 }
 
@@ -95,5 +104,17 @@ function controlSelection(button) {
     }
 
 
+}
+
+function characterSelection(button){
+    if(button === btnJinx){
+        linkCharacter = 'assets/imgs/Jinx.png';
+        btnJinx.alpha = 1;
+        btnZoe.alpha = 0.5;
+    }else{
+        linkCharacter = 'assets/imgs/Zoe.png';
+        btnJinx.alpha = 0.5;
+        btnZoe.alpha = 1;
+    }
 }
 

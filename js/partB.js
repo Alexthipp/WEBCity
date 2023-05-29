@@ -17,6 +17,7 @@ function preloadPartB(){
     game.load.image('thread', '../assets/imgs/Thread.png');
     game.load.image('border','../assets/imgs/BorderHealthbar.png');
     game.load.image('health','../assets/imgs/HealthBar.png');
+    game.load.image('character', linkCharacter);
     
     game.load.atlasJSONHash('honey', 'assets/imgs/spritesheetHoneyfruit.png','assets/jsons/spritesheetHoneyfruit.json');
     game.load.atlasJSONHash('bullet','assets/imgs/spritesheetBullet.png','assets/jsons/spritesheetBullet.json');

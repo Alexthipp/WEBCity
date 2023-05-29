@@ -49,6 +49,7 @@ function preloadPartA() {
     game.load.image('thread', '../assets/imgs/Thread.png');
     game.load.image('border','../assets/imgs/BorderHealthbar.png');
     game.load.image('health','../assets/imgs/HealthBar.png');
+    game.load.image('character', linkCharacter);
     
     game.load.atlasJSONHash('honey', 'assets/imgs/spritesheetHoneyfruit.png','assets/jsons/spritesheetHoneyfruit.json');
     game.load.atlasJSONHash('bullet','assets/imgs/spritesheetBullet.png','assets/jsons/spritesheetBullet.json');
@@ -103,8 +104,9 @@ function updatePartA() {
 ------------------------------------------------------------------*/
 
 function createCharacter() {
-    let theCharacter = game.add.sprite(0, 0, 'plus');
-    theCharacter.anchor.setTo(0.5,1);
+    let theCharacter = game.add.sprite(0, 0, 'character');
+    theCharacter.anchor.setTo(0.5,0.5);
+    theCharacter.scale.setTo(0.14,0.14);
     game.physics.enable(theCharacter, Phaser.Physics.ARCADE);
     character = new Character(0, theCharacter,200);
 }
@@ -126,6 +128,8 @@ function manageCharacterMovement() {
             character.move('right');
         }
     }
+
+    
 }
 
 /*----------------------------------------------------------------
@@ -204,8 +208,8 @@ function createBullets(number) {
 }
 
 function fireBullet() {
-    let x = character.chSprite.x;
-    let y = character.chSprite.y;
+    let x = character.chSprite.x - 5;
+    let y = character.chSprite.y - 50;
     let v = -250;
 
     let bullet = shootBullet(x, y, v);
