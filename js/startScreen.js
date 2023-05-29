@@ -13,6 +13,9 @@ var stateName;
 var numThreads = 3;
 var controls = 'keyboard';
 var linkCharacter = 'assets/imgs/jinx.png';
+var linkBulletPng = 'assets/imgs/spritesheetBulletJinx.png';
+var linkBulletJson = 'assets/jsons/spritesheetBulletJinx.json';
+var animbulletvelocity = 44;
 var threadDistance = 250;
 
 var threadsArray = [250,500,750];

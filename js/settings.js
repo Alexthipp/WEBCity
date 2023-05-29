@@ -109,10 +109,16 @@ function controlSelection(button) {
 function characterSelection(button){
     if(button === btnJinx){
         linkCharacter = 'assets/imgs/Jinx.png';
+        linkBulletPng = 'assets/imgs/spritesheetBulletJinx.png';
+        linkBulletJson = 'assets/jsons/spritesheetBulletJinx.json';
+        animbulletvelocity = 44;
         btnJinx.alpha = 1;
         btnZoe.alpha = 0.5;
     }else{
         linkCharacter = 'assets/imgs/Zoe.png';
+        linkBulletPng = 'assets/imgs/spritesheetBulletZoe.png';
+        linkBulletJson = 'assets/jsons/spritesheetBulletZoe.json';
+        animbulletvelocity = 23;
         btnJinx.alpha = 0.5;
         btnZoe.alpha = 1;
     }

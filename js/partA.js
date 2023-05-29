@@ -52,7 +52,7 @@ function preloadPartA() {
     game.load.image('character', linkCharacter);
     
     game.load.atlasJSONHash('honey', 'assets/imgs/spritesheetHoneyfruit.png','assets/jsons/spritesheetHoneyfruit.json');
-    game.load.atlasJSONHash('bullet','assets/imgs/spritesheetBullet.png','assets/jsons/spritesheetBullet.json');
+    game.load.atlasJSONHash('bullet',linkBulletPng,linkBulletJson);
     game.load.atlasJSONHash('bomb', '../assets/imgs/spritesheetBomb.png', '../assets/jsons/spritesheetBomb.json');
     game.load.atlasJSONHash('expl','assets/imgs/spritesheetExplotion.png','assets/jsons/spritesheetExplotion.json');
     game.load.atlasJSONHash('background','assets/imgs/spritesheetBackground.png','assets/jsons/spritesheetBackground.json');
@@ -221,7 +221,7 @@ function shootBullet(x, y, velocity) {
         bullet.reset(x, y);
         bullet.scale.setTo(0.15, 0.2);
         bullet.body.velocity.y = velocity;
-        bullet.animations.add('shoot',Phaser.Animation.generateFrameNames('Bullet', 1, 23,'',1,22), 44, true, false);
+        bullet.animations.add('shoot',Phaser.Animation.generateFrameNames('Bullet', 1, 23,'',1,22), animbulletvelocity, true, false);
         bullet.animations.play('shoot');
     }
     return bullet;
