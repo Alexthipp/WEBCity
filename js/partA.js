@@ -95,7 +95,6 @@ function updatePartA() {
     game.physics.arcade.overlap(honeys,character.chSprite,healthHitsCharacter,null,this);
     game.physics.arcade.overlap(bombs,ground,bombHitsGround,null,this);
     game.physics.arcade.overlap(bombs,character.chSprite,bombHitsGround,null,this);
-
     
 }
 
@@ -146,7 +145,7 @@ function createKeyControls() {
 function manageShots() {
     if ( controls == "keyboard" && fireButton.justDown) {
         fireBullet();
-    } else if(controls == "mouse" && fireButton.justPressed(10)){
+    } else if(controls == "mouse" && fireButton.justPressed(20)){
         fireBullet();
     }
 }
