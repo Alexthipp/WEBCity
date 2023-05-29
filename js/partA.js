@@ -15,6 +15,7 @@ let bombs;
 let honeys;
 let bullets;
 let explotion;
+let healthBar;
 
 let currentBombProbability;
 let currentBombVelocity;
@@ -46,6 +47,8 @@ function preloadPartA() {
     game.load.image('ground', 'assets/imgs/Ground.png')
     game.load.image('plus', 'assets/imgs/button_plus.png');
     game.load.image('thread', '../assets/imgs/Thread.png');
+    game.load.image('border','../assets/imgs/BorderHealthbar.png');
+    game.load.image('health','../assets/imgs/HealthBar.png');
     
     game.load.atlasJSONHash('honey', 'assets/imgs/spritesheetHoneyfruit.png','assets/jsons/spritesheetHoneyfruit.json');
     game.load.atlasJSONHash('bullet','assets/imgs/spritesheetBullet.png','assets/jsons/spritesheetBullet.json');
@@ -58,13 +61,13 @@ function preloadPartA() {
                         CREATE PART
 ------------------------------------------------------------------*/
 function createPartA() {
-    stateName = 'PartA';
+    stateName = 'partA';
     score = 0;
     level = 1;
-    health = 15;
+    health = 100;
     
     let bg = game.add.sprite(0, 0, 'background');
-    bg.scale.setTo(0.5, 0.5);
+    bg.scale.setTo(2, 2);
     bg.animations.add('Idle',Phaser.Animation.generateFrameNames('Background', 1, 59,'',1,59), 7, true, false);
     bg.animations.play('Idle');
 
@@ -167,6 +170,13 @@ function createHUD() {
     livesText = game.add.text(
     livesX,allY,'Lives: '+ health,styleHUD);
     livesText.anchor.setTo(1, 0);
+
+    healthBar = game.add.sprite(0, 0, 'health');
+    game.add.sprite(0, 0, 'border');
+}
+
+function updateLifeBar() {
+    healthBar.scale.setTo(health/100, 1)
 }
 
 
@@ -363,13 +373,14 @@ function bulletHitsBomb(bullet, bomb) {
 function healthHitsCharacter(character, honey){
     honey.kill();
 
-    if(0 < health && health <= 150){
-        health += 50;
-    }else if(200 >= health && health > 150){
-        health = 200;
+    if(0 < health && health <= 60){
+        health += 40;
+    }else if(100 >= health && health > 60){
+        health = 100;
     }
 
     livesText.text = 'Lives: ' + health;
+    updateLifeBar();
 }
 
 function bombHitsGround(ground,bomb){
@@ -378,8 +389,9 @@ function bombHitsGround(ground,bomb){
     bullets.forEach(resetMember, this);
     
     currentBombProbability = -1;
-    health -= 15;
+    health -= 20;
     livesText.text = 'Lives: ' + health;
+    updateLifeBar();
 
     if(health == 0){
         let explotion = explotions.getFirstExists(false);
