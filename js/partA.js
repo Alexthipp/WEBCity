@@ -10,6 +10,8 @@ const HITS_FOR_LEVEL_CHANGE = 15;
 
 let cursors;
 let fireButton;
+let bulletTime = 0;
+let offsetTimeToFire = 650;
 let character;
 let bombs;
 let honeys;
@@ -29,7 +31,6 @@ let level;
 let levelText;
 let lives;
 let livesText;
-
 let health;
 
 
@@ -148,10 +149,17 @@ function createKeyControls() {
 }
 
 function manageShots() {
-    if ( controls == "keyboard" && fireButton.justDown) {
-        fireBullet();
-    } else if(controls == "mouse" && fireButton.justPressed(20)){
-        fireBullet();
+    if ( controls === "keyboard" && fireButton.justDown) {
+        if(game.time.now > bulletTime){
+            fireBullet();
+            bulletTime = game.time.now + offsetTimeToFire;
+        }
+        
+    } else if(controls === "mouse" && fireButton.justPressed(20)){
+        if(game.time.now > bulletTime){
+            fireBullet();
+            bulletTime = game.time.now + offsetTimeToFire;
+        }
     }
 }
 

@@ -16,7 +16,6 @@ function preloadPartB(){
     game.load.image('plus', 'assets/imgs/button_plus.png');
     game.load.image('thread', '../assets/imgs/Thread.png');
     game.load.image('border','../assets/imgs/BorderHealthbar.png');
-    game.load.image('health','../assets/imgs/HealthBar.png');
     game.load.image('character', linkCharacter);
     
     game.load.atlasJSONHash('honey', 'assets/imgs/spritesheetHoneyfruit.png','assets/jsons/spritesheetHoneyfruit.json');
@@ -25,6 +24,7 @@ function preloadPartB(){
     game.load.atlasJSONHash('expl','assets/imgs/spritesheetExplotion.png','assets/jsons/spritesheetExplotion.json');
     game.load.atlasJSONHash('background','assets/imgs/spritesheetBackground.png','assets/jsons/spritesheetBackground.json');
     game.load.atlasJSONHash('bluePortal','../assets/imgs/spritesheetBlueCheckpoint.png','../assets/jsons/spritesheetBlueCheckpoint.json');
+    game.load.atlasJSONHash('health','assets/imgs/spritesheetHealthBar.png', 'assets/jsons/spritesheetHealthbar.json');
 }
 
 /*----------------------------------------------------------------
@@ -84,11 +84,16 @@ function updatePartB(){
     game.physics.arcade.overlap(bluePoint, bombs, teletrasnportBomb, null, this);
 }
 
+
+/*----------------------------------------------------------------
+                        TELETRANSPORTATION
+------------------------------------------------------------------*/
+
 function teletrasnportBomb(bPoint, bomb) {
     if (bomb.x == bPoint.x) {
         if (Math.random() < 0.5) {
-            bomb.center.x = blueDestination.x;
-            bomb.center.y = blueDestination.y;
+            bomb.x = blueDestination.x;
+            bomb.y = blueDestination.y;
         }
         else {
             bomb.x += 0.1;

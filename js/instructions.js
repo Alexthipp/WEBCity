@@ -18,7 +18,3 @@ function createInst(){
     let posY = GAME_STAGE_HEIGHT / 2- BUTTON_OFFSET_HEIGHT;
     btnbck = game.add.button(posX, posY + BUTTON_OFFSETY_BETWEEN *2 , 'back', clickBack);
 }
-
-function clickBack(){
-    game.state.start('startScreen');
-}
