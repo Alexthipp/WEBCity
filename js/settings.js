@@ -11,6 +11,8 @@ function preloadSettings() {
     game.load.image('menus', 'assets/imgs/button_menus.png');
     game.load.image('kbd', 'assets/imgs/button_keyboard.png');
     game.load.image('mouse', 'assets/imgs/button_mouse.png');
+    game.load.image('jinx','assets/imgs/button_jinx.png');
+    game.load.image('zoe','assets/imgs/button_zoe.png');
 }
 
 
@@ -52,8 +54,8 @@ function createSettings() {
     btnKeybd = game.add.button(posX - 120, posY + 50, 'kbd', controlSelection);
     btnMouse = game.add.button(posX + 100, posY + 50, 'mouse', controlSelection);
 
-    btnJinx = game.add.button(posX - 120, posY + 150, 'plus', characterSelection);
-    btnZoe = game.add.button(posX + 100, posY + 150, 'menus', characterSelection);
+    btnJinx = game.add.button(posX - 120, posY + 150, 'jinx', characterSelection);
+    btnZoe = game.add.button(posX + 100, posY + 150, 'zoe', characterSelection);
 
     btnKeybd.alpha = 1;
     btnMouse.alpha = 0.5;

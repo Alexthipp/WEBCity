@@ -87,8 +87,8 @@ function updatePartB(){
 function teletrasnportBomb(bPoint, bomb) {
     if (bomb.x == bPoint.x) {
         if (Math.random() < 0.5) {
-            bomb.x = blueDestination.x;
-            bomb.y = blueDestination.y;
+            bomb.center.x = blueDestination.x;
+            bomb.center.y = blueDestination.y;
         }
         else {
             bomb.x += 0.1;

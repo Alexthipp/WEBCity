@@ -48,7 +48,7 @@ function preloadPartA() {
     game.load.image('plus', 'assets/imgs/button_plus.png');
     game.load.image('thread', '../assets/imgs/Thread.png');
     game.load.image('border','../assets/imgs/BorderHealthbar.png');
-    game.load.image('health','../assets/imgs/HealthBar.png');
+    
     game.load.image('character', linkCharacter);
     
     game.load.atlasJSONHash('honey', 'assets/imgs/spritesheetHoneyfruit.png','assets/jsons/spritesheetHoneyfruit.json');
@@ -56,6 +56,7 @@ function preloadPartA() {
     game.load.atlasJSONHash('bomb', '../assets/imgs/spritesheetBomb.png', '../assets/jsons/spritesheetBomb.json');
     game.load.atlasJSONHash('expl','assets/imgs/spritesheetExplotion.png','assets/jsons/spritesheetExplotion.json');
     game.load.atlasJSONHash('background','assets/imgs/spritesheetBackground.png','assets/jsons/spritesheetBackground.json');
+    game.load.atlasJSONHash('health','assets/imgs/spritesheetHealthBar.png', 'assets/jsons/spritesheetHealthbar.json');
 }
 
 /*----------------------------------------------------------------
@@ -161,21 +162,24 @@ function manageShots() {
 function createHUD() {
     let scoreX = 5;
     let levelX = game.world.width / 2;
-    let livesX = game.world.width - 5;
-    let allY = game.world.height - 25;
+    let livesX = game.world.width - 125;
+    let allY = 25;
     let styleHUD =
     {fontSize: '18px', fill: '#FFFFFF'};
     scoreText = game.add.text(
     scoreX,allY,'Score: '+score,styleHUD);
+    
     levelText = game.add.text(
     levelX,allY,'Level: '+level,styleHUD);
     levelText.anchor.setTo(0.5, 0);
-    livesText = game.add.text(
-    livesX,allY,'Lives: '+ health,styleHUD);
-    livesText.anchor.setTo(1, 0);
 
-    healthBar = game.add.sprite(0, 0, 'health');
-    game.add.sprite(0, 0, 'border');
+    healthBar = game.add.sprite(livesX, allY, 'health');
+    healthBar.animations.add('Lives',Phaser.Animation.generateFrameNames('Healthbar', 1, 6,'',1,6), 6, true, false);
+    healthBar.animations.play('Lives');
+
+    let border = game.add.sprite(livesX, allY, 'border');
+    livesText = game.add.text(livesX + 50,allY,health,styleHUD);
+    
 }
 
 function updateLifeBar() {
@@ -272,7 +276,7 @@ function setupExplotion(explotion) {
     explotion.scale.setTo(0.25,0.25);
     explotion.anchor.x = 0.5;
     explotion.anchor.y = 0.5;
-    explotion.animations.add('exploit',Phaser.Animation.generateFrameNames('Explotion', 1, 16,'',1,16), 16, false, false);
+    explotion.animations.add('exploit',Phaser.Animation.generateFrameNames('Explotion', 1, 17,'',1,17), 17, false, false);
 }
 
 function displayExplotion(bomb) {
@@ -382,18 +386,16 @@ function healthHitsCharacter(character, honey){
         health = 100;
     }
 
-    livesText.text = 'Lives: ' + health;
+    livesText.text = health;
     updateLifeBar();
 }
 
 function bombHitsGround(ground,bomb){
     bomb.kill();
-    bombs.forEach(resetMember, this);
-    bullets.forEach(resetMember, this);
     
     currentBombProbability = -1;
     health -= 20;
-    livesText.text = 'Lives: ' + health;
+    livesText.text = health;
     updateLifeBar();
 
     if(health == 0){
@@ -411,10 +413,3 @@ function bombHitsGround(ground,bomb){
     
 
 }
-
-
-/*----------------COMENTARIOS PARA EL PROFESOR TUTORIA !!!!!BORRAR ANTES DE ENTREGAR!!!!!!-------------------------------------------------------------------------------------
-    -Bombas a veces explotan solas sin que una bala colisione con ellas, puede que sea que hayan dos balas una sin sprite.
-    -Por que en la funcion de healthHitsCharacter el orden de los parametros es alreves a como se introducen en la función update.
-
-*/
