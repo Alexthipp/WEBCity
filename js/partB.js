@@ -58,12 +58,14 @@ function createPartB(){
 }
 
 function createPortals() {
-    bluePoint = game.add.sprite(threadsArray[0] - 30, 50, 'bluePortal');
-    blueDestination = game.add.sprite(threadsArray[1] - 30, 50, 'bluePortal');
+    bluePoint = game.add.sprite(threadsArray[0] + 25, 50, 'bluePortal');
+    blueDestination = game.add.sprite(threadsArray[1] + 25, 50, 'bluePortal');
     bluePoint.scale.setTo(0.1, 0.1);
+    bluePoint.anchor.x = 0.65;
     game.physics.enable(bluePoint, Phaser.Physics.ARCADE);
     bluePoint.enableBody = true;
     blueDestination.scale.setTo(0.1, 0.1);
+    blueDestination.anchor.x = 0.65;
 
 }
 
@@ -83,13 +85,13 @@ function updatePartB(){
 }
 
 function teletrasnportBomb(bPoint, bomb) {
-    if (bomb.y >= bPoint.y) {
-        if (Math.random() < 0.2) {
+    if (bomb.x == bPoint.x) {
+        if (Math.random() < 0.5) {
             bomb.x = blueDestination.x;
             bomb.y = blueDestination.y;
         }
         else {
-            bomb.enableBody = false;
+            bomb.x += 0.1;
         }
     }
 }
