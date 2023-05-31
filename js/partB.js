@@ -7,6 +7,8 @@ let playBState = {
 let bluePoint;
 let blueDestination;
 
+let teport;
+
 /*----------------------------------------------------------------
                         PRELOAD PART
 ------------------------------------------------------------------*/
@@ -25,6 +27,12 @@ function preloadPartB(){
     game.load.atlasJSONHash('background','assets/imgs/spritesheetBackground.png','assets/jsons/spritesheetBackground.json');
     game.load.atlasJSONHash('bluePortal','../assets/imgs/spritesheetBlueCheckpoint.png','../assets/jsons/spritesheetBlueCheckpoint.json');
     game.load.atlasJSONHash('health','assets/imgs/spritesheetHealthBar.png', 'assets/jsons/spritesheetHealthbar.json');
+
+    game.load.audio('bckmusic','assets/snds/backgroundMusicPlaying.mp3');
+    game.load.audio('shoot',linkBulletSound);
+    game.load.audio('explSnd','assets/snds/Explotion.wav');
+    game.load.audio('healthSnd','assets/snds/health.wav');
+    game.load.audio('teleport','assets/snds/tp.wav');
 }
 
 /*----------------------------------------------------------------
@@ -42,6 +50,8 @@ function createPartB(){
     bg.scale.setTo(2, 2);
     bg.animations.add('Idle',Phaser.Animation.generateFrameNames('Background', 1, 59,'',1,59), 7, true, false);
     bg.animations.play('Idle');
+
+    teport = game.sound.add('teleport', 0.2);
 
     createKeyControls();
     createBullets(BULLETS_GROUP_SIZE);
