@@ -20,14 +20,20 @@ var threadDistance = 250;
 
 var threadsArray = [250,500,750];
 
+let music;
+
 function preloadStart() {
     game.load.image('background', '../assets/imgs/Background.png');
     game.load.image('play','assets/imgs/button_play.png');
     game.load.image('settings','assets/imgs/button_settings.png');
     game.load.image('instructions','assets/imgs/button_instructions.png');
+
+    game.load.audio('bckmusic','assets/snds/backgroundMusicNotPlaying.mp3');
 }
 
 function createStart() {
+    music = game.sound.add('bckmusic',0.05,true);
+    music.play();
     let bg = game.add.sprite(0, 0, 'background');
     bg.scale.setTo(0.5, 0.5);
     let posX = GAME_STAGE_WIDTH / 2 - BUTTON_OFFSET_WIDTH;
@@ -47,13 +53,16 @@ function createStart() {
 }
 
 function clickPlay(){
+    music.stop();
     game.state.start('selectPart');
 }
 
 function clickInstrunctions(){
+    music.stop();
     game.state.start('instructions');
 }
 
 function clickSettings(){
+    music.stop();
     game.state.start('settings');
 }
