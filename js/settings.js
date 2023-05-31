@@ -113,6 +113,7 @@ function characterSelection(button){
         linkCharacter = 'assets/imgs/Jinx.png';
         linkBulletPng = 'assets/imgs/spritesheetBulletJinx.png';
         linkBulletJson = 'assets/jsons/spritesheetBulletJinx.json';
+        linkBulletSound = 'assets/snds/jinxShoot.wav';
         animbulletvelocity = 44;
         btnJinx.alpha = 1;
         btnZoe.alpha = 0.5;
@@ -120,6 +121,7 @@ function characterSelection(button){
         linkCharacter = 'assets/imgs/Zoe.png';
         linkBulletPng = 'assets/imgs/spritesheetBulletZoe.png';
         linkBulletJson = 'assets/jsons/spritesheetBulletZoe.json';
+        linkBulletSound = 'assets/snds/zoeShoot.mp3';
         animbulletvelocity = 23;
         btnJinx.alpha = 0.5;
         btnZoe.alpha = 1;

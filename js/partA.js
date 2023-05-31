@@ -33,6 +33,12 @@ let lives;
 let livesText;
 let health;
 
+//SOUND
+
+let music;
+let bulletSound;
+let explotionSound;
+let healtSound;
 
 let playAState = {
     preload: preloadPartA,
@@ -58,6 +64,11 @@ function preloadPartA() {
     game.load.atlasJSONHash('expl','assets/imgs/spritesheetExplotion.png','assets/jsons/spritesheetExplotion.json');
     game.load.atlasJSONHash('background','assets/imgs/spritesheetBackground.png','assets/jsons/spritesheetBackground.json');
     game.load.atlasJSONHash('health','assets/imgs/spritesheetHealthBar.png', 'assets/jsons/spritesheetHealthbar.json');
+
+    game.load.audio('bckmusic','assets/snds/backgroundMusicPlaying.mp3');
+    game.load.audio('shoot',linkBulletSound);
+    game.load.audio('explSnd','assets/snds/Explotion.wav');
+    game.load.audio('healthSnd','assets/snds/health.wav');
 }
 
 /*----------------------------------------------------------------
@@ -68,6 +79,12 @@ function createPartA() {
     score = 0;
     level = 1;
     health = 100;
+
+    music = game.sound.add('bckmusic',0.05,true);
+    music.play();
+    bulletSound = game.sound.add('shoot',0.1);
+    explotionSound = game.sound.add('explSnd',0.2);
+    healtSound = game.sound.add('healthSnd', 0.15);
     
     let bg = game.add.sprite(0, 0, 'background');
     bg.scale.setTo(2, 2);
@@ -151,12 +168,14 @@ function createKeyControls() {
 function manageShots() {
     if ( controls === "keyboard" && fireButton.justDown) {
         if(game.time.now > bulletTime){
+            bulletSound.play();
             fireBullet();
             bulletTime = game.time.now + offsetTimeToFire;
         }
         
     } else if(controls === "mouse" && fireButton.justPressed(20)){
         if(game.time.now > bulletTime){
+            bulletSound.play();
             fireBullet();
             bulletTime = game.time.now + offsetTimeToFire;
         }
@@ -345,6 +364,7 @@ function continueGame() {
 }
 
 function endGame(){
+    music.stop();
     game.state.start('endScreen');
 }
 
@@ -364,7 +384,7 @@ function bulletHitsBomb(bullet, bomb) {
         displayHealthItem(x,y);
     }
     displayExplotion(bomb);
-    //soundBlast.play();
+    explotionSound.play();
     score++;
     scoreText.text = 'Score: '+score;
     if (level < NUM_LEVELS && score === level*HITS_FOR_LEVEL_CHANGE) {
@@ -387,6 +407,7 @@ function bulletHitsBomb(bullet, bomb) {
 
 function healthHitsCharacter(character, honey){
     honey.kill();
+    healtSound.play();
 
     if(0 < health && health <= 60){
         health += 40;

@@ -13,14 +13,16 @@ var stateName;
 var numThreads = 3;
 var controls = 'keyboard';
 var linkCharacter = 'assets/imgs/jinx.png';
+var linkBulletSound = 'assets/snds/jinxShoot.wav';
 var linkBulletPng = 'assets/imgs/spritesheetBulletJinx.png';
 var linkBulletJson = 'assets/jsons/spritesheetBulletJinx.json';
 var animbulletvelocity = 44;
+
 var threadDistance = 250;
 
 var threadsArray = [250,500,750];
 
-let music;
+let musicNP;
 
 function preloadStart() {
     game.load.image('background', '../assets/imgs/Background.png');
@@ -32,8 +34,8 @@ function preloadStart() {
 }
 
 function createStart() {
-    music = game.sound.add('bckmusic',0.05,true);
-    music.play();
+    musicNP = game.sound.add('bckmusic',0.05,true);
+    musicNP.play();
     let bg = game.add.sprite(0, 0, 'background');
     bg.scale.setTo(0.5, 0.5);
     let posX = GAME_STAGE_WIDTH / 2 - BUTTON_OFFSET_WIDTH;
@@ -53,16 +55,16 @@ function createStart() {
 }
 
 function clickPlay(){
-    music.stop();
+    musicNP.stop();
     game.state.start('selectPart');
 }
 
 function clickInstrunctions(){
-    music.stop();
+    musicNP.stop();
     game.state.start('instructions');
 }
 
 function clickSettings(){
-    music.stop();
+    musicNP.stop();
     game.state.start('settings');
 }
