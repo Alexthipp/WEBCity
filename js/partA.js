@@ -443,7 +443,7 @@ function bombHitsGround(ground,bomb){
             explotion.scale.setTo(1.25,1.25);
             explotion.animations.play('exploit');
         }
-
+        bombs.forEach(resetMember, this);
         game.time.events.add(2500, endGame, this);
     }
     else{

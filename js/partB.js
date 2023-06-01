@@ -22,7 +22,7 @@ let teport;
 ------------------------------------------------------------------*/
 
 function preloadPartB(){
-    game.load.image('ground', 'assets/imgs/Ground.png')
+    game.load.image('ground', 'assets/imgs/Ground.png');
     game.load.image('plus', 'assets/imgs/button_plus.png');
     game.load.image('thread', '../assets/imgs/Thread.png');
     game.load.image('border','../assets/imgs/BorderHealthbar.png');
