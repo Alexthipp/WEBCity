@@ -45,6 +45,7 @@ function preloadPartB(){
     game.load.audio('explSnd','assets/snds/Explotion.wav');
     game.load.audio('healthSnd','assets/snds/health.wav');
     game.load.audio('teleport','assets/snds/tp.wav');
+    game.load.audio('movingSnd','assets/snds/moving.wav');
 }
 
 /*----------------------------------------------------------------

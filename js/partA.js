@@ -74,6 +74,7 @@ function preloadPartA() {
     game.load.audio('shoot',linkBulletSound);
     game.load.audio('explSnd','assets/snds/Explotion.wav');
     game.load.audio('healthSnd','assets/snds/health.wav');
+    game.load.audio('movingSnd','assets/snds/moving.wav');
 }
 
 /*----------------------------------------------------------------
@@ -138,17 +139,21 @@ function manageCharacterMovement() {
     if (controls == 'mouse') {
         if (game.input.speed.x < 0 && game.input.mousePointer.x < character.chSprite.x - threadDistance/2) {
             character.move('left');
+            movingSound.play();
         }
         else if (game.input.speed.x > 0 && game.input.mousePointer.x > character.chSprite.x + threadDistance/2) {
             character.move('right');
+            movingSound.play();
         }
     }
     else if (controls == 'keyboard') {
         if (cursors.left.justDown) {
             character.move('left');
+            movingSound.play();
         }
         else if (cursors.right.justDown) {
             character.move('right');
+            movingSound.play();
         }
     }
 
@@ -196,9 +201,14 @@ function createHUD() {
     let livesX = game.world.width - 125;
     let allY = 25;
     let styleHUD =
-    {fontSize: '18px', fill: '#FFFFFF'};
+                    {font:'Press Start 2P',
+                    fontStyle: 'bold',
+                    fontSize: '16px',
+                    align: 'center', 
+                    fill: '#A200FF'
+                };
     scoreText = game.add.text(
-    scoreX,allY,'Score: '+score,styleHUD);
+    scoreX,allY,'Score:'+score,styleHUD);
     
     levelText = game.add.text(
     levelX,allY, stateName + ' Level: '+level,styleHUD);
@@ -268,7 +278,7 @@ function shootBullet(x, y, velocity) {
     let bullet = bullets.getFirstExists(false);
     if (bullet) {
         bullet.reset(x, y);
-        bullet.scale.setTo(0.15, 0.2);
+        bullet.scale.setTo(0.15, 0.25);
         bullet.body.velocity.y = velocity;
         bullet.animations.add('shoot',Phaser.Animation.generateFrameNames('Bullet', 1, 23,'',1,22), animbulletvelocity, true, false);
         bullet.animations.play('shoot');
@@ -421,7 +431,7 @@ function bulletHitsBomb(bullet, bomb) {
     displayExplotion(bomb);
     explotionSound.play();
     score++;
-    scoreText.text = 'Score: '+score;
+    scoreText.text = 'Score:'+score;
     if (stateName == 'partA'){
         checkGameA();
     }
@@ -483,9 +493,10 @@ function healthHitsGround(ground,honey){
                         Sound
 ------------------------------------------------------------------*/
 function createSounds() {
-    music = game.sound.add('bckmusic',0.06,true);
+    music = game.sound.add('bckmusic',0.07,true);
     music.play();
-    bulletSound = game.sound.add('shoot',0.1);
-    explotionSound = game.sound.add('explSnd',0.2);
-    healtSound = game.sound.add('healthSnd', 0.15);
+    bulletSound = game.sound.add('shoot',0.4);
+    explotionSound = game.sound.add('explSnd',0.6);
+    healtSound = game.sound.add('healthSnd', 0.4);
+    movingSound = game.sound.add('movingSnd',0.25);
 }

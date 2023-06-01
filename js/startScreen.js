@@ -69,11 +69,15 @@ function createStart() {
     textC += 'Alejandro Toro Urdaneta\n';
     textC += 'Jesus Huguet Orosia';
     let styleC = {
-        font: '25px Arial',
-        fill: '#6100D5'
+        font: 'Indie Flower',
+        fontSize: '24px',
+        fontStyle: 'bold',
+        fill: '#FFC100',
+        align: 'center'
     };
 
-    let credits = game.add.text((game.world.width-textC.length)/100, (game.world.height - TEXT_OFFSET_VER)/100, textC, styleC);
+    let credits = game.add.text(game.world.width/2, game.world.height - TEXT_OFFSET_VER, textC, styleC);
+    credits.anchor.setTo(0.5,0.5);
 }
 
 function clickPlay(){

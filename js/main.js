@@ -1,12 +1,24 @@
 const GAME_STAGE_WIDTH = 1000;
 const GAME_STAGE_HEIGHT = 700;
+let game;
 
-let game = new Phaser.Game(GAME_STAGE_WIDTH, GAME_STAGE_HEIGHT, Phaser.CANVAS, 'gamestage');
+let wfConfig = {
+    active: function () {
+        startGame();
+    },
 
+    google: {
+        families: ['Rammetto One', 'Sniglet', 'Indie Flower', 'Black Ops One', 'Press Start 2P']
+    },
+};
 
-window.onload = startGame;
+WebFont.load(wfConfig);
+
 
 function startGame() {
+
+    game = new Phaser.Game(GAME_STAGE_WIDTH, GAME_STAGE_HEIGHT, Phaser.CANVAS, 'gamestage')
+
     game.state.add('startScreen', startState);
     game.state.add('selectPart',selectState);
     game.state.add('settings', settingsState);
