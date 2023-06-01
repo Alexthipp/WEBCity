@@ -1,18 +1,23 @@
 
 let endState= {
     preload: preloadEnd,
-    create: createEnd
+    create: createEnd,
+    update: updatedEnd
 };
 
+
+let enter;
 
 function preloadEnd() {
     game.load.image('background', 'assets/imgs/Background.png');
     game.load.image('back', 'assets/imgs/button_back.png');
-    game.load.image('playAgain', 'assets/imgs/button_play-again.png');
+    game.load.image('playAgain', 'assets/imgs/Playagaing.png');
 
 }
 
 function createEnd() {
+    game.input.enabled = true;
+
     let bg = game.add.sprite(0, 0, 'background');
     bg.scale.setTo(0.5, 0.5);
     
@@ -29,16 +34,19 @@ function createEnd() {
     let posY = GAME_STAGE_HEIGHT / 2 - BUTTON_OFFSET_HEIGHT;
     btnbck = game.add.button(posX, posY + BUTTON_OFFSETY_BETWEEN * 2, 'back', clickBack);
 
-    let btnPlayAgain = game.add.button(posX, posY + BUTTON_OFFSETY_BETWEEN, 'playAgain', playAgain);
+    let btnPlayAgain = game.add.image(posX, posY + BUTTON_OFFSETY_BETWEEN, 'playAgain');
+
+    enter = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
     game.time.events.add(20000, clickBack, this);
     
 }
 
-function playAgain(){
-    time = 0;
-    score = 0;
-    result = 'WIN';
-
-    game.state.start('partA');
+function updatedEnd(){
+    if(enter.isDown){
+        time = 0;
+        score = 0;
+        result = 'WIN';
+        game.state.start('partA');
+    }
 }

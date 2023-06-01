@@ -5,6 +5,7 @@ let playBState = {
 };
 
 const LEVEL_HEALTH = [0.2, 0.1, 0.05];
+const LEVEL_PROPABILITY_PORTALS = [0.2,0.4,0.5];
 
 let bluePoint;
 let blueDestination;
@@ -53,7 +54,6 @@ function preloadPartB(){
 function createPartB(){
     
     stateName = 'partB';
-    score = 0;
     level = 1;
     health = 100;
     enemiesCreated = 0;
@@ -90,7 +90,6 @@ function createPartB(){
 function updatePartB(){
     manageCharacterMovement();
     manageShots();
-    updateTime();
     game.physics.arcade.overlap(bullets,bombs,bulletHitsBomb,null,this);
     game.physics.arcade.overlap(honeys,character.chSprite,healthHitsCharacter,null,this);
     game.physics.arcade.overlap(bombs,ground,bombHitsGround,null,this);
@@ -167,7 +166,7 @@ function createPortals() {
 
 function teletrasnportBomb(point, bomb) {
     if (bomb.x == point.x && bomb.y > point.y + 50) {
-        if (Math.random() < 0.5) {
+        if (Math.random() < LEVEL_PROPABILITY_PORTALS[level-1]) {
             if (point === bluePoint) {
                 bomb.x = blueDestination.x;
                 bomb.y = blueDestination.y + 50;
@@ -202,7 +201,7 @@ function checkGameB() {
         healthProbability = LEVEL_HEALTH[level - 1];
         lowerDestination();
         currentBombProbability = LEVEL_BOMBS_PROBABILITY[level-1];
-        currentBombVelocity = LEVEL_BOMBS_VELOCITY[level-1];
+        currentBombVelocity = LEVEL_BOMBS_VELOCITY_B[level-1];
     }else if(level == NUM_LEVELS && enemiesDestroyed == LEVEL_ENEMIES[level - 1]){
         music.stop();
         game.state.start('endScreen');

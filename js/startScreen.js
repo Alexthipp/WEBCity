@@ -10,23 +10,27 @@ let startState= {
 };
 
 let result = 'WIN';
+let score;
 
-var stateName;
-var numThreads = 3;
-var controls = 'keyboard';
-var linkCharacter = 'assets/imgs/jinx.png';
-var linkBulletSound = 'assets/snds/jinxShoot.wav';
-var linkBulletPng = 'assets/imgs/spritesheetBulletJinx.png';
-var linkBulletJson = 'assets/jsons/spritesheetBulletJinx.json';
-var animbulletvelocity = 44;
 
-var time;
+let stateName;
+let numThreads = 3;
+let controls = 'keyboard';
+let linkCharacter = 'assets/imgs/jinx.png';
+let linkBulletSound = 'assets/snds/jinxShoot.wav';
+let linkBulletPng = 'assets/imgs/spritesheetBulletJinx.png';
+let linkBulletJson = 'assets/jsons/spritesheetBulletJinx.json';
+let animbulletvelocity = 44;
 
-var threadDistance = 250;
+let time;
 
-var threadsArray = [250,500,750];
+let threadDistance = 250;
+
+let threadsArray = [250,500,750];
 
 let musicNP;
+let btnSnd;
+let msplaying = false;
 
 function preloadStart() {
     game.load.image('background', '../assets/imgs/Background.png');
@@ -35,14 +39,26 @@ function preloadStart() {
     game.load.image('instructions','assets/imgs/button_instructions.png');
 
     game.load.audio('bckmusic','assets/snds/backgroundMusicNotPlaying.mp3');
+    game.load.audio('bttnSnd','assets/snds/Button.wav');
 }
 
 function createStart() {
     time = 0;
-    musicNP = game.sound.add('bckmusic',0.05,true);
-    musicNP.play();
+    score = 0;
+
+    
+    if(!msplaying){
+        musicNP = game.sound.add('bckmusic',0.05,true);
+        msplaying = true;
+        musicNP.play();
+    }
+
+    btnSnd = game.sound.add('bttnSnd',0.05);
+
     let bg = game.add.sprite(0, 0, 'background');
     bg.scale.setTo(0.5, 0.5);
+
+
     let posX = GAME_STAGE_WIDTH / 2 - BUTTON_OFFSET_WIDTH;
     let posY = GAME_STAGE_HEIGHT / 2 - BUTTON_OFFSET_HEIGHT;
     btnPlay = game.add.button(posX, posY - BUTTON_OFFSETY_BETWEEN, 'play', clickPlay);
@@ -56,20 +72,23 @@ function createStart() {
         font: '25px Arial',
         fill: '#6100D5'
     };
+
     let credits = game.add.text((game.world.width-textC.length)/100, (game.world.height - TEXT_OFFSET_VER)/100, textC, styleC);
 }
 
 function clickPlay(){
-    musicNP.stop();
+    btnSnd.play();
     game.state.start('selectPart');
 }
 
 function clickInstrunctions(){
-    musicNP.stop();
+    
+    btnSnd.play();
     game.state.start('instructions');
 }
 
 function clickSettings(){
-    musicNP.stop();
+    
+    btnSnd.play();
     game.state.start('settings');
 }

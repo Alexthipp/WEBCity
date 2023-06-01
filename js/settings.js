@@ -13,6 +13,8 @@ function preloadSettings() {
     game.load.image('mouse', 'assets/imgs/button_mouse.png');
     game.load.image('jinx','assets/imgs/button_jinx.png');
     game.load.image('zoe','assets/imgs/button_zoe.png');
+
+    game.load.audio('bttnSnd','assets/snds/Button.wav');
 }
 
 
@@ -31,6 +33,8 @@ function createSettings() {
 
     let bg = game.add.sprite(0, 0, 'background');
     bg.scale.setTo(0.5, 0.5);
+
+    btnSnd = game.sound.add('bttnSnd',0.05);
 
     let posX = GAME_STAGE_WIDTH / 2 - BUTTON_OFFSET_WIDTH;
     let posY = GAME_STAGE_HEIGHT / 2 - BUTTON_OFFSET_HEIGHT;
@@ -68,6 +72,7 @@ function createSettings() {
 }
 
 function clickBack() {
+    btnSnd.play();
     game.state.start('startScreen');
 }
 

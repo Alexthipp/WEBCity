@@ -4,7 +4,8 @@ const ENEMIES_GROUP_SIZE = 200;
 const TIMER_RHYTHM = 1.5 * Phaser.Timer.SECOND;
 const NUM_LEVELS = 3;
 const LEVEL_BOMBS_PROBABILITY = [0.4, 1.2, 2.0];
-const LEVEL_BOMBS_VELOCITY = [50, 150, 250];
+const LEVEL_BOMBS_VELOCITY_A = [70, 140, 250];
+const LEVEL_BOMBS_VELOCITY_B = [70, 140, 200];
 const LEVEL_ENEMIES = [10, 20, 40];
 const HITS_FOR_LEVEL_CHANGE = 15;
 
@@ -12,7 +13,7 @@ const HITS_FOR_LEVEL_CHANGE = 15;
 let cursors;
 let fireButton;
 let bulletTime = 0;
-let offsetTimeToFire = 650;
+let offsetTimeToFire = 500;
 let character;
 let bombs;
 let honeys;
@@ -29,7 +30,6 @@ let currentBombVelocity;
 let ground
 
 //HUD
-let score;
 let scoreText;
 let level;
 let levelText;
@@ -81,7 +81,6 @@ function preloadPartA() {
 ------------------------------------------------------------------*/
 function createPartA() {
     stateName = 'partA';
-    score = 0;
     level = 1;
     health = 100;
     enemiesCreated = 0;
@@ -106,6 +105,7 @@ function createPartA() {
     ground = game.add.sprite(0, GAME_STAGE_HEIGHT-45, 'ground');
     game.physics.enable(ground, Phaser.Physics.ARCADE);
 
+
 }
 
 /*----------------------------------------------------------------
@@ -114,7 +114,6 @@ function createPartA() {
 function updatePartA() {
     manageCharacterMovement();
     manageShots();
-    updateTime();
     game.physics.arcade.overlap(bullets,bombs,bulletHitsBomb,null,this);
     game.physics.arcade.overlap(honeys,character.chSprite,healthHitsCharacter,null,this);
     game.physics.arcade.overlap(bombs,ground,bombHitsGround,null,this);
@@ -215,6 +214,8 @@ function createHUD() {
 
     let border = game.add.sprite(livesX, allY, 'border');
     livesText = game.add.text(livesX + 50,allY,health,styleHUD);
+
+    game.time.events.loop(Phaser.Timer.SECOND, updateTime, this);
     
 }
 
@@ -223,7 +224,7 @@ function updateLifeBar() {
 }
 
 function updateTime(){
-    time += Phaser.Timer.SECOND/1000;
+    time += 1;
     timeText.text = setTime(time);
 }
 
@@ -236,7 +237,6 @@ function setTime(seconds) {
                     THREADS FUNCTIONS 
 ------------------------------------------------------------------*/
 function createThreads() {
-    //threadsArray.forEach(element => game.add.sprite(element - 70, 0, 'thread'));
     for (i = 0; i < threadsArray.length; i++) {
         let thread = game.add.sprite(threadsArray[i] - 35, 0, 'thread');
         thread.scale.setTo(1, 0.74);
@@ -286,7 +286,11 @@ function createBombs(number) {
     bombs.createMultiple(number, 'bomb');
     bombs.callAll('anchor.setTo', 'anchor', 0.5, 1.0);
     currentBombProbability = LEVEL_BOMBS_PROBABILITY[level-1];
-    currentBombVelocity = LEVEL_BOMBS_VELOCITY[level-1];
+    if(stateName === 'partA'){
+        currentBombVelocity = LEVEL_BOMBS_VELOCITY_A[level-1];
+    }else if(stateName === 'partB'){
+        currentBombVelocity = LEVEL_BOMBS_VELOCITY_B[level-1];
+    }
     game.time.events.loop(TIMER_RHYTHM, activateBomb, this);
 }
 
@@ -393,7 +397,7 @@ function checkGameA() {
         level++;
         levelText.text =  stateName + ' Level: ' + level;
         currentBombProbability = LEVEL_BOMBS_PROBABILITY[level-1];
-        currentBombVelocity = LEVEL_BOMBS_VELOCITY[level-1];
+        currentBombVelocity = LEVEL_BOMBS_VELOCITY_A[level-1];
     }else if(level == NUM_LEVELS && enemiesDestroyed == LEVEL_ENEMIES[level - 1]){
         music.stop();
         game.state.start('partB');
@@ -445,10 +449,6 @@ function bombHitsGround(ground,bomb){
     explotionSound.play();
     bomb.kill();
     enemiesDestroyed ++;
-    if (score > 0) {
-        score --;
-        scoreText.text = 'Score: '+score;
-    }
     health -= 20;
     livesText.text = health;
     updateLifeBar();
@@ -461,6 +461,8 @@ function bombHitsGround(ground,bomb){
             explotion.animations.play('exploit');
         }
         bombs.forEach(resetMember, this);
+        character.chSprite.kill();
+        game.input.enabled = false;
         game.time.events.add(2500, endGame, this);
     }
     else{
@@ -481,7 +483,7 @@ function healthHitsGround(ground,honey){
                         Sound
 ------------------------------------------------------------------*/
 function createSounds() {
-    music = game.sound.add('bckmusic',0.05,true);
+    music = game.sound.add('bckmusic',0.06,true);
     music.play();
     bulletSound = game.sound.add('shoot',0.1);
     explotionSound = game.sound.add('explSnd',0.2);
