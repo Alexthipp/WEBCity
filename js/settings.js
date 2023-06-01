@@ -63,23 +63,11 @@ function createSettings() {
     btnJinx = game.add.button(posX - 120, posY + 150, 'jinx', characterSelection);
     btnZoe = game.add.button(posX + 100, posY + 150, 'zoe', characterSelection);
 
-    if (controls == 'keyboard'){
-        btnKeybd.alpha = 1;
-        btnMouse.alpha = 0.5;
-    }
-    else {
-        btnKeybd.alpha = 0.5;
-        btnMouse.alpha = 1;
-    }
+    btnKeybd.alpha = 1;
+    btnMouse.alpha = 0.5;
 
-    if (linkCharacter == 'assets/imgs/jinx.png') {
-        btnJinx.alpha = 1;
-        btnZoe.alpha = 0.5;
-    }
-    else {
-        btnJinx.alpha = 0.5;
-        btnZoe.alpha = 1;
-    }
+    btnJinx.alpha = 1;
+    btnZoe.alpha = 0.5;
 
 }
 
