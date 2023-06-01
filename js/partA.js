@@ -56,7 +56,7 @@ let playAState = {
 ------------------------------------------------------------------*/
 function preloadPartA() {
     
-    game.load.image('ground', 'assets/imgs/Ground.png')
+    game.load.image('ground', 'assets/imgs/Ground.png');
     game.load.image('plus', 'assets/imgs/button_plus.png');
     game.load.image('thread', '../assets/imgs/Thread.png');
     game.load.image('border','../assets/imgs/BorderHealthbar.png');
@@ -430,7 +430,7 @@ function bulletHitsBomb(bullet, bomb) {
     }
     displayExplotion(bomb);
     explotionSound.play();
-    score++;
+    score += 10;
     scoreText.text = 'Score:'+score;
     if (stateName == 'partA'){
         checkGameA();
@@ -444,9 +444,9 @@ function healthHitsCharacter(character, honey){
     honey.kill();
     healtSound.play();
 
-    if(0 < health && health <= 60){
-        health += 40;
-    }else if(100 >= health && health > 60){
+    if(0 < health && health <= 80){
+        health += 20;
+    }else if(100 >= health && health > 80){
         health = 100;
     }
 
