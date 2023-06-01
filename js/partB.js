@@ -33,10 +33,10 @@ function preloadPartB(){
     game.load.atlasJSONHash('bomb', '../assets/imgs/spritesheetBomb.png', '../assets/jsons/spritesheetBomb.json');
     game.load.atlasJSONHash('expl','assets/imgs/spritesheetExplotion.png','assets/jsons/spritesheetExplotion.json');
     game.load.atlasJSONHash('background','assets/imgs/spritesheetBackground.png','assets/jsons/spritesheetBackground.json');
-    game.load.atlasJSONHash('bluePortal','/assets/imgs/spritesheetBlueCheckpoint.png','../assets/jsons/spritesheetBlueCheckpoint.json');
-    game.load.atlasJSONHash('redPortal','/assets/imgs/spritesheetRedCheckpoint.png', '/assets/jsons/spritesheetRedCheckpoint.json');
-    game.load.atlasJSONHash('greenPortal', '/assets/imgs/spritesheetGreenCheckpoint.png', '/assets/jsons/spritesheetGreenCheckpoint.json');
-    game.load.atlasJSONHash('yellowPortal','/assets/imgs/spritesheetYellowCheckpoint.png','/assets/jsons/spritesheetYellowCheckpoint.json');
+    game.load.atlasJSONHash('bluePortal','/assets/imgs/spritesheetBlueCheckpoint.png','assets/jsons/spritesheetBlueCheckpoint.json');
+    game.load.atlasJSONHash('redPortal','/assets/imgs/spritesheetRedCheckpoint.png', 'assets/jsons/spritesheetRedCheckpoint.json');
+    game.load.atlasJSONHash('greenPortal', '/assets/imgs/spritesheetGreenCheckpoint.png', 'assets/jsons/spritesheetGreenCheckpoint.json');
+    game.load.atlasJSONHash('yellowPortal','/assets/imgs/spritesheetYellowCheckpoint.png','assets/jsons/spritesheetYellowCheckpoint.json');
     game.load.atlasJSONHash('health','assets/imgs/spritesheetHealthBar.png', 'assets/jsons/spritesheetHealthbar.json');
 
     game.load.audio('bckmusic','assets/snds/backgroundMusicPlaying.mp3');
@@ -82,54 +82,6 @@ function createPartB(){
     game.physics.enable(ground, Phaser.Physics.ARCADE);
 }
 
-function createPortals() {
-    bluePoint = game.add.sprite(threadsArray[0] + 25, 50, 'bluePortal');
-    bluePoint.scale.setTo(0.08, 0.08);
-    bluePoint.anchor.x = 0.65;
-    game.physics.enable(bluePoint, Phaser.Physics.ARCADE);
-    bluePoint.enableBody = true;
-
-    blueDestination = game.add.sprite(threadsArray[2] + 25, 150, 'bluePortal');
-    blueDestination.scale.setTo(0.08, 0.08);
-    blueDestination.anchor.x = 0.65;
-
-    if (numThreads >= 4) {
-        redPoint = game.add.sprite(threadsArray[3] + 25, 75, 'redPortal');
-        redPoint.scale.setTo(0.08, 0.08);
-        redPoint.anchor.x = 0.65;
-        game.physics.enable(redPoint, Phaser.Physics.ARCADE);
-        redPoint.enableBody = true;
-
-        redDestination = game.add.sprite(threadsArray[1] + 25, 280, 'redPortal');
-        redDestination.scale.setTo(0.08, 0.08);
-        redDestination.anchor.x = 0.65;
-    }
-
-    if (numThreads >= 6) {
-        greenPoint = game.add.sprite(threadsArray[4] + 25, 60, 'greenPortal');
-        greenPoint.scale.setTo(0.08, 0.08);
-        greenPoint.anchor.x = 0.65;
-        game.physics.enable(greenPoint, Phaser.Physics.ARCADE);
-        greenPoint.enableBody = true;
-
-        greenDestination = game.add.sprite(threadsArray[5] + 25, 250, 'greenPortal');
-        greenDestination.scale.setTo(0.08, 0.08);
-        greenDestination.anchor.x = 0.65;
-    }
-
-    if (numThreads >= 8) {
-        yellowPoint = game.add.sprite(threadsArray[6] + 25, 70, 'yellowPortal');
-        yellowPoint.scale.setTo(0.08, 0.08);
-        yellowPoint.anchor.x = 0.65;
-        game.physics.enable(yellowPoint, Phaser.Physics.ARCADE);
-        yellowPoint.enableBody = true;
-
-        yellowDestination = game.add.sprite(threadsArray[7] + 25, 200, 'yellowPortal');
-        yellowDestination.scale.setTo(0.08, 0.08);
-        yellowDestination.anchor.x = 0.65;
-    }
-
-}
 
 /*----------------------------------------------------------------
                         UPDATE PART
@@ -138,6 +90,7 @@ function createPortals() {
 function updatePartB(){
     manageCharacterMovement();
     manageShots();
+    updateTime();
     game.physics.arcade.overlap(bullets,bombs,bulletHitsBomb,null,this);
     game.physics.arcade.overlap(honeys,character.chSprite,healthHitsCharacter,null,this);
     game.physics.arcade.overlap(bombs,ground,bombHitsGround,null,this);
@@ -153,6 +106,64 @@ function updatePartB(){
 /*----------------------------------------------------------------
                         TELETRANSPORTATION
 ------------------------------------------------------------------*/
+
+function createPortals() {
+    bluePoint = game.add.sprite(threadsArray[0] + 25, 50, 'bluePortal');
+    bluePoint.animations.add('bluePoint',Phaser.Animation.generateFrameNames('Bluecheckpoint', 1, 5,'',1,5), 2, true, false);
+    bluePoint.animations.play('bluePoint');
+    bluePoint.scale.setTo(0.08, 0.08);
+    bluePoint.anchor.x = 0.65;
+    game.physics.enable(bluePoint, Phaser.Physics.ARCADE);
+    bluePoint.enableBody = true;
+
+    blueDestination = game.add.sprite(threadsArray[2] + 25, 150, 'bluePortal');
+    blueDestination.scale.setTo(0.08, 0.08);
+    blueDestination.anchor.x = 0.65;
+
+    if (numThreads >= 4) {
+        redPoint = game.add.sprite(threadsArray[3] + 25, 75, 'redPortal');
+        redPoint.animations.add('redPoint',Phaser.Animation.generateFrameNames('Redcheckpoint', 1, 5,'',1,5), 1, true, false);
+        redPoint.animations.play('redPoint');
+        redPoint.scale.setTo(0.08, 0.08);
+        redPoint.anchor.x = 0.65;
+        game.physics.enable(redPoint, Phaser.Physics.ARCADE);
+        redPoint.enableBody = true;
+
+        redDestination = game.add.sprite(threadsArray[1] + 25, 280, 'redPortal');
+        redDestination.scale.setTo(0.08, 0.08);
+        redDestination.anchor.x = 0.65;
+    }
+
+    if (numThreads >= 6) {
+        greenPoint = game.add.sprite(threadsArray[4] + 25, 60, 'greenPortal');
+        greenPoint.animations.add('greenPoint',Phaser.Animation.generateFrameNames('Greencheckpoint', 1, 5,'',1,5), 4, true, false);
+        greenPoint.animations.play('greenPoint');
+        greenPoint.scale.setTo(0.08, 0.08);
+        greenPoint.anchor.x = 0.65;
+        game.physics.enable(greenPoint, Phaser.Physics.ARCADE);
+        greenPoint.enableBody = true;
+
+        greenDestination = game.add.sprite(threadsArray[5] + 25, 250, 'greenPortal');
+        greenDestination.scale.setTo(0.08, 0.08);
+        greenDestination.anchor.x = 0.65;
+    }
+
+    if (numThreads >= 8) {
+        yellowPoint = game.add.sprite(threadsArray[6] + 25, 70, 'yellowPortal');
+        yellowPoint.animations.add('yellowPoint',Phaser.Animation.generateFrameNames('YellowCheckpoint', 1, 5,'.png',1,5), 5, true, false);
+        yellowPoint.animations.play('yellowPoint');
+        yellowPoint.scale.setTo(0.08, 0.08);
+        yellowPoint.anchor.x = 0.65;
+        game.physics.enable(yellowPoint, Phaser.Physics.ARCADE);
+        yellowPoint.enableBody = true;
+
+        yellowDestination = game.add.sprite(threadsArray[7] + 25, 200, 'yellowPortal');
+        yellowDestination.scale.setTo(0.08, 0.08);
+        yellowDestination.anchor.x = 0.65;
+    }
+
+}
+
 
 function teletrasnportBomb(point, bomb) {
     if (bomb.x == point.x && bomb.y > point.y + 50) {

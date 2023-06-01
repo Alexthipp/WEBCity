@@ -33,6 +33,7 @@ let score;
 let scoreText;
 let level;
 let levelText;
+let timeText;
 let lives;
 let livesText;
 let health;
@@ -113,11 +114,13 @@ function createPartA() {
 function updatePartA() {
     manageCharacterMovement();
     manageShots();
+    updateTime();
     game.physics.arcade.overlap(bullets,bombs,bulletHitsBomb,null,this);
     game.physics.arcade.overlap(honeys,character.chSprite,healthHitsCharacter,null,this);
     game.physics.arcade.overlap(bombs,ground,bombHitsGround,null,this);
     game.physics.arcade.overlap(bombs,character.chSprite,bombHitsGround,null,this);
-    
+    game.physics.arcade.overlap(honeys,ground,healthHitsGround,null,this);
+     
 }
 
 /*----------------------------------------------------------------
@@ -199,8 +202,12 @@ function createHUD() {
     scoreX,allY,'Score: '+score,styleHUD);
     
     levelText = game.add.text(
-    levelX,allY,'Level: '+level,styleHUD);
+    levelX,allY, stateName + ' Level: '+level,styleHUD);
+
     levelText.anchor.setTo(0.5, 0);
+    
+    timeText = game.add.text(levelX, allY + 25, setTime(time),styleHUD);
+    timeText.anchor.setTo(0.5,0);
 
     healthBar = game.add.sprite(livesX, allY, 'health');
     healthBar.animations.add('Lives',Phaser.Animation.generateFrameNames('Healthbar', 1, 6,'',1,6), 6, true, false);
@@ -215,6 +222,15 @@ function updateLifeBar() {
     healthBar.scale.setTo(health/100, 1)
 }
 
+function updateTime(){
+    time += Phaser.Timer.SECOND/1000;
+    timeText.text = setTime(time);
+}
+
+function setTime(seconds) {
+    return String(Math.trunc(seconds / 60)).padStart(2, "0") + ":" +
+        String(Math.floor(seconds % 60)).padStart(2, "0");
+}
 
 /*----------------------------------------------------------------
                     THREADS FUNCTIONS 
@@ -368,13 +384,14 @@ function continueGame() {
 
 function endGame(){
     music.stop();
+    result = 'LOSE';
     game.state.start('endScreen');
 }
 
 function checkGameA() {
     if (level < NUM_LEVELS && enemiesDestroyed == LEVEL_ENEMIES[level - 1]) {
         level++;
-        levelText.text = 'Level: ' + level;
+        levelText.text =  stateName + ' Level: ' + level;
         currentBombProbability = LEVEL_BOMBS_PROBABILITY[level-1];
         currentBombVelocity = LEVEL_BOMBS_VELOCITY[level-1];
     }else if(level == NUM_LEVELS && enemiesDestroyed == LEVEL_ENEMIES[level - 1]){
@@ -454,6 +471,10 @@ function bombHitsGround(ground,bomb){
             checkGameB();
         }
     }
+}
+
+function healthHitsGround(ground,honey){
+    honey.kill();
 }
 
 /*----------------------------------------------------------------

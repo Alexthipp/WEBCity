@@ -9,6 +9,8 @@ let startState= {
     create: createStart
 };
 
+let result = 'WIN';
+
 var stateName;
 var numThreads = 3;
 var controls = 'keyboard';
@@ -17,6 +19,8 @@ var linkBulletSound = 'assets/snds/jinxShoot.wav';
 var linkBulletPng = 'assets/imgs/spritesheetBulletJinx.png';
 var linkBulletJson = 'assets/jsons/spritesheetBulletJinx.json';
 var animbulletvelocity = 44;
+
+var time;
 
 var threadDistance = 250;
 
@@ -34,6 +38,7 @@ function preloadStart() {
 }
 
 function createStart() {
+    time = 0;
     musicNP = game.sound.add('bckmusic',0.05,true);
     musicNP.play();
     let bg = game.add.sprite(0, 0, 'background');

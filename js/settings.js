@@ -47,7 +47,9 @@ function createSettings() {
     posY = GAME_STAGE_HEIGHT / 4;
 
     btnPlus = game.add.button(posX + 50, posY - 10, 'plus', modNumberThreads);
+    btnPlus.scale.setTo(0.75,0.75);
     btnMenus = game.add.button(posX - 50, posY - 10, 'menus', modNumberThreads);
+    btnMenus.scale.setTo(0.75,0.75);
 
     textNum = game.add.text(GAME_STAGE_WIDTH / 2 + 25, GAME_STAGE_HEIGHT / 4, numThreads, styleT);
 
@@ -95,14 +97,12 @@ function controlSelection(button) {
         btnMouse.input.enable = true;
         btnKeybd.alpha = 1;
         btnKeybd.input.enable = false;
-        console.log("boton keyboard enable");
     } else {
         controls = 'mouse';
         btnMouse.alpha = 1;
         btnMouse.input.enable = false;
         btnKeybd.alpha = 0.5;
         btnKeybd.input.enable = true;
-        console.log("boton mouse enable");
     }
 
 
