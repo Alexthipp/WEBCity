@@ -25,19 +25,19 @@ let teport;
 function preloadPartB(){
     game.load.image('ground', 'assets/imgs/Ground.png');
     game.load.image('plus', 'assets/imgs/button_plus.png');
-    game.load.image('thread', '../assets/imgs/Thread.png');
-    game.load.image('border','../assets/imgs/BorderHealthbar.png');
+    game.load.image('thread', 'assets/imgs/Thread.png');
+    game.load.image('border','assets/imgs/BorderHealthbar.png');
     game.load.image('character', linkCharacter);
     
     game.load.atlasJSONHash('honey', 'assets/imgs/spritesheetHoneyfruit.png','assets/jsons/spritesheetHoneyfruit.json');
     game.load.atlasJSONHash('bullet',linkBulletPng,linkBulletJson);
-    game.load.atlasJSONHash('bomb', '../assets/imgs/spritesheetBomb.png', '../assets/jsons/spritesheetBomb.json');
+    game.load.atlasJSONHash('bomb', 'assets/imgs/spritesheetBomb.png', 'assets/jsons/spritesheetBomb.json');
     game.load.atlasJSONHash('expl','assets/imgs/spritesheetExplotion.png','assets/jsons/spritesheetExplotion.json');
     game.load.atlasJSONHash('background','assets/imgs/spritesheetBackground.png','assets/jsons/spritesheetBackground.json');
-    game.load.atlasJSONHash('bluePortal','/assets/imgs/spritesheetBlueCheckpoint.png','assets/jsons/spritesheetBlueCheckpoint.json');
-    game.load.atlasJSONHash('redPortal','/assets/imgs/spritesheetRedCheckpoint.png', 'assets/jsons/spritesheetRedCheckpoint.json');
-    game.load.atlasJSONHash('greenPortal', '/assets/imgs/spritesheetGreenCheckpoint.png', 'assets/jsons/spritesheetGreenCheckpoint.json');
-    game.load.atlasJSONHash('yellowPortal','/assets/imgs/spritesheetYellowCheckpoint.png','assets/jsons/spritesheetYellowCheckpoint.json');
+    game.load.atlasJSONHash('bluePortal','assets/imgs/spritesheetBlueCheckpoint.png','assets/jsons/spritesheetBlueCheckpoint.json');
+    game.load.atlasJSONHash('redPortal','assets/imgs/spritesheetRedCheckpoint.png', 'assets/jsons/spritesheetRedCheckpoint.json');
+    game.load.atlasJSONHash('greenPortal', 'assets/imgs/spritesheetGreenCheckpoint.png', 'assets/jsons/spritesheetGreenCheckpoint.json');
+    game.load.atlasJSONHash('yellowPortal','assets/imgs/spritesheetYellowCheckpoint.png','assets/jsons/spritesheetYellowCheckpoint.json');
     game.load.atlasJSONHash('health','assets/imgs/spritesheetHealthBar.png', 'assets/jsons/spritesheetHealthbar.json');
 
     game.load.audio('bckmusic','assets/snds/backgroundMusicPlaying.mp3');

@@ -58,14 +58,14 @@ function preloadPartA() {
     
     game.load.image('ground', 'assets/imgs/Ground.png');
     game.load.image('plus', 'assets/imgs/button_plus.png');
-    game.load.image('thread', '../assets/imgs/Thread.png');
-    game.load.image('border','../assets/imgs/BorderHealthbar.png');
+    game.load.image('thread', 'assets/imgs/Thread.png');
+    game.load.image('border','assets/imgs/BorderHealthbar.png');
     
     game.load.image('character', linkCharacter);
     
     game.load.atlasJSONHash('honey', 'assets/imgs/spritesheetHoneyfruit.png','assets/jsons/spritesheetHoneyfruit.json');
     game.load.atlasJSONHash('bullet',linkBulletPng,linkBulletJson);
-    game.load.atlasJSONHash('bomb', '../assets/imgs/spritesheetBomb.png', '../assets/jsons/spritesheetBomb.json');
+    game.load.atlasJSONHash('bomb', 'assets/imgs/spritesheetBomb.png', 'assets/jsons/spritesheetBomb.json');
     game.load.atlasJSONHash('expl','assets/imgs/spritesheetExplotion.png','assets/jsons/spritesheetExplotion.json');
     game.load.atlasJSONHash('background','assets/imgs/spritesheetBackground.png','assets/jsons/spritesheetBackground.json');
     game.load.atlasJSONHash('health','assets/imgs/spritesheetHealthBar.png', 'assets/jsons/spritesheetHealthbar.json');

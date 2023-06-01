@@ -33,7 +33,7 @@ let btnSnd;
 let msplaying = false;
 
 function preloadStart() {
-    game.load.image('background', '../assets/imgs/Background.png');
+    game.load.image('background', 'assets/imgs/Background.png');
     game.load.image('play','assets/imgs/button_play.png');
     game.load.image('settings','assets/imgs/button_settings.png');
     game.load.image('instructions','assets/imgs/button_instructions.png');
