@@ -5,6 +5,7 @@ const TIMER_RHYTHM = 1.5 * Phaser.Timer.SECOND;
 const NUM_LEVELS = 3;
 const LEVEL_BOMBS_PROBABILITY = [0.4, 1.2, 2.0];
 const LEVEL_BOMBS_VELOCITY = [50, 150, 250];
+const LEVEL_ENEMIES = [10, 20, 40];
 const HITS_FOR_LEVEL_CHANGE = 15;
 
 
@@ -18,6 +19,9 @@ let honeys;
 let bullets;
 let explotion;
 let healthBar;
+let enemiesCreated;
+let enemiesDestroyed;
+let healthProbability;
 
 let currentBombProbability;
 let currentBombVelocity;
@@ -25,7 +29,7 @@ let currentBombVelocity;
 let ground
 
 //HUD
-let score; 
+let score;
 let scoreText;
 let level;
 let levelText;
@@ -79,12 +83,9 @@ function createPartA() {
     score = 0;
     level = 1;
     health = 100;
-
-    music = game.sound.add('bckmusic',0.05,true);
-    music.play();
-    bulletSound = game.sound.add('shoot',0.1);
-    explotionSound = game.sound.add('explSnd',0.2);
-    healtSound = game.sound.add('healthSnd', 0.15);
+    enemiesCreated = 0;
+    enemiesDestroyed = 0;
+    healthProbability = 0.2;
     
     let bg = game.add.sprite(0, 0, 'background');
     bg.scale.setTo(2, 2);
@@ -99,6 +100,7 @@ function createPartA() {
     createExplotions(ENEMIES_GROUP_SIZE);
     createCharacter();
     createHUD();
+    createSounds();
 
     ground = game.add.sprite(0, GAME_STAGE_HEIGHT-45, 'ground');
     game.physics.enable(ground, Phaser.Physics.ARCADE);
@@ -267,15 +269,13 @@ function createBombs(number) {
     bombs.enableBody = true;
     bombs.createMultiple(number, 'bomb');
     bombs.callAll('anchor.setTo', 'anchor', 0.5, 1.0);
-    bombs.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', resetMember);
-    bombs.setAll('checkWorldBounds', true);
     currentBombProbability = LEVEL_BOMBS_PROBABILITY[level-1];
     currentBombVelocity = LEVEL_BOMBS_VELOCITY[level-1];
     game.time.events.loop(TIMER_RHYTHM, activateBomb, this);
 }
 
 function activateBomb() {
-    if(Math.random() < currentBombProbability) {
+    if(Math.random() < currentBombProbability && enemiesCreated < LEVEL_ENEMIES[level - 1] ) {
         let bomb = bombs.getFirstExists(false);
         if (bomb) {
             let x = pickARandom();
@@ -285,6 +285,8 @@ function activateBomb() {
             bomb.body.velocity.y = currentBombVelocity;
             bomb.animations.add('bombAnimation', Phaser.Animation.generateFrameNames('Bomb', 1, 2,'',1,2), 4, true, false );
             bomb.animations.play('bombAnimation');
+            
+            enemiesCreated ++;
         }
     }
 }
@@ -325,15 +327,16 @@ function createHealthItem(number){
     honeys = game.add.group();
     honeys.enableBody = true;
     honeys.createMultiple(number, 'honey');
-    honeys.callAll('anchor.setTo', 'anchor', 0.5, 0.5);
+    honeys.callAll('anchor.setTo', 'anchor', 0.63, 1);
     honeys.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', resetMember);
     honeys.setAll('checkWorldBounds', true);
 }
 
-function displayHealthItem(bx,by){
+function displayHealthItem(){
     let honey = honeys.getFirstExists(false);
         if (honey) {
-            honey.reset(bx, by);
+            let x = pickARandom();
+            honey.reset(x, 0);
             honey.scale.setTo(0.1, 0.1);
             honey.body.velocity.y = 70;
             honey.animations.add('honeyAnimation', Phaser.Animation.generateFrameNames('Honeyfruit', 1, 7,'',1,7), 7, true, false );
@@ -368,6 +371,18 @@ function endGame(){
     game.state.start('endScreen');
 }
 
+function checkGameA() {
+    if (level < NUM_LEVELS && enemiesDestroyed == LEVEL_ENEMIES[level - 1]) {
+        level++;
+        levelText.text = 'Level: ' + level;
+        currentBombProbability = LEVEL_BOMBS_PROBABILITY[level-1];
+        currentBombVelocity = LEVEL_BOMBS_VELOCITY[level-1];
+    }else if(level == NUM_LEVELS && enemiesDestroyed == LEVEL_ENEMIES[level - 1]){
+        music.stop();
+        game.state.start('partB');
+    }
+}
+
 /*----------------------------------------------------------------
                         COLLISIONS
         -Condición para pasar de parte en BulletHitsBomb()-
@@ -376,33 +391,22 @@ function endGame(){
 ------------------------------------------------------------------*/
 
 function bulletHitsBomb(bullet, bomb) {
-    let x = bomb.body.center.x;
-    let y = bomb.body.center.y;
     bullet.kill();
     bomb.kill();
-    if(Math.random() < 0.2){
-        displayHealthItem(x,y);
+    enemiesDestroyed ++;
+    if(Math.random() < healthProbability){
+        displayHealthItem();
     }
     displayExplotion(bomb);
     explotionSound.play();
     score++;
     scoreText.text = 'Score: '+score;
-    if (level < NUM_LEVELS && score === level*HITS_FOR_LEVEL_CHANGE) {
-        level++;
-        levelText.text = 'Level: ' + level;
-        currentBombProbability = LEVEL_BOMBS_PROBABILITY[level-1];
-        currentBombVelocity = LEVEL_BOMBS_VELOCITY[level-1];
-    }else if(level == NUM_LEVELS && score === level*HITS_FOR_LEVEL_CHANGE){
-        if(stateName === 'partA'){
-            game.state.start('partB');
-        }
-        else if(stateName === 'partB'){
-            game.state.start('startScreen');
-        }else{
-            game.state.start('endScreen');
-        }
+    if (stateName == 'partA'){
+        checkGameA();
     }
-      
+    else if (stateName == 'partB') {
+        checkGameB();
+    }
 }
 
 function healthHitsCharacter(character, honey){
@@ -420,14 +424,19 @@ function healthHitsCharacter(character, honey){
 }
 
 function bombHitsGround(ground,bomb){
+    displayExplotion(bomb);
+    explotionSound.play();
     bomb.kill();
-    
-    currentBombProbability = -1;
+    enemiesDestroyed ++;
+    if (score > 0) {
+        score --;
+        scoreText.text = 'Score: '+score;
+    }
     health -= 20;
     livesText.text = health;
     updateLifeBar();
 
-    if(health == 0){
+    if(health <= 0){
         let explotion = explotions.getFirstExists(false);
         if(explotion){
             explotion.reset(GAME_STAGE_WIDTH/2, GAME_STAGE_HEIGHT/2);
@@ -435,10 +444,25 @@ function bombHitsGround(ground,bomb){
             explotion.animations.play('exploit');
         }
 
-        game.time.events.add(5500, endGame, this);
+        game.time.events.add(2500, endGame, this);
     }
-    else
-        game.time.events.add(1000, continueGame, this);
-    
+    else{
+        if (stateName == 'partA'){
+            checkGameA();
+        }
+        else if (stateName == 'partB') {
+            checkGameB();
+        }
+    }
+}
 
+/*----------------------------------------------------------------
+                        Sound
+------------------------------------------------------------------*/
+function createSounds() {
+    music = game.sound.add('bckmusic',0.05,true);
+    music.play();
+    bulletSound = game.sound.add('shoot',0.1);
+    explotionSound = game.sound.add('explSnd',0.2);
+    healtSound = game.sound.add('healthSnd', 0.15);
 }
